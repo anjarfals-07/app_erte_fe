@@ -1,0 +1,105 @@
+/* .mat-raised-button {
+  padding: 3px 43px 3px 43px;
+  border-radius: 10px;
+} */
+
+.confirm-button-yes {
+  padding: 3px 43px 3px 43px;
+  border-radius: 10px;
+  background-color: rgba(224, 223, 223, 1);
+  font-weight: bold;
+  font-family: 'Poppins', sans-serif !important;
+}
+
+.confirm-button-no {
+  padding: 3px 43px 3px 43px;
+  border-radius: 10px;
+  background-color: rgba(224, 223, 223, 1);
+  font-weight: bold;
+  font-family: 'Poppins', sans-serif !important;
+}
+.confirm-button-no:hover {
+  padding: 3px 43px 3px 43px;
+  border-radius: 10px;
+  background-color: #f44336;
+  color: #ffff;
+  font-weight: bold;
+  font-family: 'Poppins', sans-serif !important;
+}
+.confirm-button-yes:active:hover:not([disabled]) {
+  padding: 3px 43px 3px 43px;
+  border-radius: 10px;
+  background-color: rgba(157, 157, 157, 1);
+  color: #ffff;
+  font-weight: bold;
+  font-family: 'Poppins', sans-serif !important;
+}
+
+.confirm-button-yes:enabled:hover {
+  padding: 3px 43px 3px 43px;
+  border-radius: 10px;
+  background-color: rgba(157, 157, 157, 1);
+  color: #ffff;
+  font-weight: bold;
+  font-family: 'Poppins', sans-serif !important;
+}
+
+.mat-select {
+  font-family: 'Poppins', sans-serif !important;
+}
+
+.mat-option {
+  font-family: 'Poppins', sans-serif !important;
+}
+
+.mat-checkbox {
+  font-family: 'Poppins', sans-serif !important;
+}
+
+.mat-form-field {
+  font-family: 'Poppins', sans-serif !important;
+}
+
+.mat-radio-button {
+  font-family: 'Poppins', sans-serif !important;
+}
+
+.mat-raised-button {
+  font-family: 'Poppins', sans-serif !important;
+}
+.e-float-input,
+.e-float-input.e-control-wrapper,
+.e-float-input.e-disabled,
+.e-float-input.e-control-wrapper.e-disabled,
+.e-float-input.e-input-group.e-disabled,
+.e-float-input.e-input-group.e-control-wrapper.e-disabled {
+  font-family: 'Poppins', sans-serif !important;
+}
+.e-card {
+  font-family: 'Poppins', sans-serif !important;
+}
+label {
+  font-weight: 1000;
+}
+.fa-icon {
+  color: rgb(245, 76, 76);
+  font-size: 50px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  margin-left: -2px !important;
+  /* margin-left: 50%; */
+}
+.html * {
+  font-family: 'Poppins', sans-serif !important;
+}
+.mat-raised-button-focus-overlay {
+  background-color: transparent !important;
+  outline: 0px solid transparent;
+}
+.e-card {
+  font-family: 'Poppins', sans-serif !important;
+}
+.mat-card {
+  font-family: 'Poppins', sans-serif !important;
+}

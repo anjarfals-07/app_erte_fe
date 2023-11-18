@@ -1,0 +1,46 @@
+/* Add your global styles here */
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+mat-toolbar {
+  position: relative;
+}
+
+mat-drawer-container {
+  height: calc(100% - 64px);
+}
+
+mat-drawer {
+  width: 250px;
+}
+
+mat-drawer-content {
+  padding: 16px;
+}
+
+/* Optional: Add hover effect on menu items */
+mat-list-item:hover {
+  background-color: #f0f0f0;
+}
+
+/* Optional: Style the toolbar buttons */
+mat-icon-button,
+mat-flat-button,
+mat-button {
+  color: white; /* Change the color based on your design */
+}
+
+/* Optional: Style the active route link */
+mat-list-item.active {
+  background-color: #e0e0e0; /* Change the color based on your design */
+}
+
+.mat-nav-list {
+  padding-top: 20px;
+}
+.nav-item {
+  margin-bottom: 10px;
+}
+
+/* Add more styles as needed */

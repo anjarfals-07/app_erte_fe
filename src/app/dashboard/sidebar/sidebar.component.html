@@ -1,0 +1,59 @@
+<mat-toolbar color="primary" class="mat-elevation-z8">
+  <button (click)="drawer.toggle()" mat-icon-button>
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span>Material Design</span>
+  <span class="example-spacer"></span>
+  <button routerLink="" mat-button>Home</button>
+  <button routerLink="" mat-button>About</button>
+  <button routerLink="" mat-button>Contact</button>
+  <button [mat-menu-trigger-for]="lvl1master" mat-button>Master</button>
+  <mat-menu #lvl1master="matMenu">
+    <button mat-menu-item>Test 1</button>
+    <button mat-menu-item>Test 2</button>
+    <button mat-menu-item>Test 3</button>
+  </mat-menu>
+</mat-toolbar>
+<mat-drawer-container autosize>
+  <mat-drawer #drawer opened="true" mode="side" position="start">
+    <mat-nav-list>
+      <mat-list-item routerLink="" class="nav-item">
+        <button routerLink="" mat-flat-button class="btn-nav">
+          <mat-icon>dashboard</mat-icon> Dashboard
+        </button>
+      </mat-list-item>
+      <mat-list-item routerLink="/penduduk" class="nav-item">
+        <button routerLink="/penduduk" mat-button class="btn-nav">
+          <mat-icon>home</mat-icon> Penduduk
+        </button>
+      </mat-list-item>
+      <mat-list-item class="nav-item">
+        <button routerLink="slider" mat-button class="btn-nav">
+          <mat-icon>explore</mat-icon> Penduduk Pindah
+        </button>
+      </mat-list-item>
+      <mat-list-item class="nav-item">
+        <button routerLink="table" mat-button class="btn-nav">
+          <mat-icon>table</mat-icon> Penduduk Meninggal
+        </button>
+      </mat-list-item>
+      <mat-list-item class="nav-item">
+        <button mat-button class="btn-nav">
+          <mat-icon>settings</mat-icon> Settings
+        </button>
+      </mat-list-item>
+      <mat-list-item class="nav-item">
+        <button mat-button class="btn-nav">
+          <mat-icon>help</mat-icon> Surat Pengantar
+        </button>
+      </mat-list-item>
+    </mat-nav-list>
+
+  </mat-drawer>
+  <mat-drawer-content>
+    <div style="text-align: center;min-height: 600px;">
+
+      <router-outlet></router-outlet>
+    </div>
+  </mat-drawer-content>
+</mat-drawer-container>

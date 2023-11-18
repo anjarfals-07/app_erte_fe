@@ -1,0 +1,186 @@
+<mat-card class="example-card">
+  <mat-card-header>
+    <mat-card-title>Data Penduduk</mat-card-title>
+    <!-- <mat-card-subtitle>Dog Breed</mat-card-subtitle> -->
+  </mat-card-header>
+  <mat-card-content>
+    <div class="table-responsive">
+      <table mat-table [dataSource]="items.data.penduduk" class="mat-table-expand mt-3" multiTemplateDataRows>
+        <!-- ... other code ... -->
+        <!-- Position Column -->
+        <ng-container matColumnDef="no">
+          <th mat-header-cell *matHeaderCellDef> No. </th>
+          <td mat-cell *matCellDef="let element; let i = dataIndex" class="grid-index-right">
+            {{ i + 1 + paginator.pageIndex * paginator.pageSize }}.
+          </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef> Nama Penduduk </th>
+          <td mat-cell *matCellDef="let element"> {{element.namaLengkap}} </td>
+        </ng-container>
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="ktp">
+          <th mat-header-cell *matHeaderCellDef> No Ktp </th>
+          <td mat-cell *matCellDef="let element"> {{element.noKtp}} </td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="jk">
+          <th mat-header-cell *matHeaderCellDef> Jenis Kelamin </th>
+          <td mat-cell *matCellDef="let element"> {{element.jeniskelamin}} </td>
+        </ng-container>
+        <ng-container matColumnDef="ttl">
+          <th mat-header-cell *matHeaderCellDef> Tempat/Tanggal Lahir </th>
+          <td mat-cell *matCellDef="let element"> {{element.tempatLahir }} /
+            {{element.tanggallahir |  date:'dd-MM-yyyy'}}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="statusKeluarga">
+          <th mat-header-cell *matHeaderCellDef> Status Keluarga</th>
+          <td mat-cell *matCellDef="let element"> {{element.statusKeluarga }}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="statusPerkawinan">
+          <th mat-header-cell *matHeaderCellDef> Status Perkawinan</th>
+          <td mat-cell *matCellDef="let element"> {{element.statusPerkawinan }}
+          </td>
+        </ng-container>
+        <!-- <ng-container matColumnDef="foto">
+          <th mat-header-cell *matHeaderCellDef> Foto</th>
+          <td mat-cell *matCellDef="let element"> {{element.fotoUrl }}
+          </td>
+        </ng-container> -->
+        <ng-container matColumnDef="foto">
+          <th mat-header-cell *matHeaderCellDef> Foto </th>
+          <td mat-cell *matCellDef="let element">
+            <img [src]="element.fotoUrl" alt="Foto Penduduk" style="width: 50px;">
+
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef>Action</th>
+          <td mat-cell *matCellDef="let element">
+            <a href="javascript:void();" [routerLink]="[element.id, 'edit']" mat-icon-button
+              (click)="$event.stopPropagation()">
+              <fa-icon icon="pencil-alt"></fa-icon>
+            </a>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="expand">
+          <th mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-icon-button aria-label="expand row"
+              (click)="expandedElement = expandedElement === element ? null : element; $event.stopPropagation()">
+              <mat-icon *ngIf="expandedElement !== element">keyboard_arrow_down</mat-icon>
+              <mat-icon *ngIf="expandedElement === element">keyboard_arrow_up</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="expandedDetail">
+          <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumnsExpand.length">
+            <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+              <div class="p-3 w-100">
+                <mat-card class="w-50 mx-auto card-kk">
+                  <mat-card-title class="bg-kk">Kartu Keluarga
+                  </mat-card-title>
+                  <hr>
+                  <mat-card-content>
+                    <div class="clearfix">
+                      <div class="float-start fw-bolder">No KK</div>
+                      <div class="float-end">{{ element.kartuKeluarga?.noKK }}</div>
+                    </div>
+                    <div class="clearfix mt-3">
+                      <div class="float-start fw-bolder">Nama Kepala Keluarga</div>
+                      <div class="float-end text-capitalize">{{ element.kartuKeluarga?.namaKepalaKeluarga }}
+                      </div>
+                    </div>
+                  </mat-card-content>
+                  <mat-card-actions>
+
+                    <mat-card-content>
+                      <mat-card>
+                        <mat-card-title class="bg-personal">Personal Info
+                        </mat-card-title>
+                        <hr>
+                        <div class="clearfix mt-3">
+                          <div class="float-start fw-bolder">Agama</div>
+                          <div class="float-end text-capitalize">{{ element.agama }}</div>
+                        </div>
+                        <div class="clearfix mt-3">
+                          <div class="float-start fw-bolder">Pendidikan</div>
+                          <div class="float-end text-capitalize">{{ element.pendidikan }}</div>
+                        </div>
+                        <div class="clearfix mt-3">
+                          <div class="float-start fw-bolder">Pekerjaan</div>
+                          <div class="float-end text-capitalize">{{ element.pekerjaan }}</div>
+                        </div>
+                        <div class="clearfix mt-3">
+                          <div class="float-start fw-bolder">Telepon</div>
+                          <div class="float-end text-capitalize">{{ element.telepon }}</div>
+                        </div>
+                        <div class="clearfix mt-3">
+                          <div class="float-start fw-bolder">Alamat</div>
+                          <div class="float-end text-capitalize">{{ element.alamat }}</div>
+                        </div>
+                        <div class="clearfix mt-3">
+                          <div class="float-start fw-bolder">Rt - RW</div>
+                          <div class="float-end text-capitalize">{{ element.rt }} - {{ element.rw }}</div>
+                        </div>
+                        <div class="clearfix mt-3">
+                          <div class="float-start fw-bolder">Kelurahan / Kecamatan</div>
+                          <div class="float-end text-capitalize">{{ element.kelurahan }} / {{ element.kecamatan }}
+                          </div>
+                        </div>
+                        <div class="clearfix mt-3">
+                          <div class="float-start fw-bolder">Kota</div>
+                          <div class="float-end text-capitalize">{{ element.kota }}</div>
+                        </div>
+                        <div class="clearfix mt-3">
+                          <div class="float-start fw-bolder">Kode Pos</div>
+                          <div class="float-end text-capitalize">{{ element.kodePos }}</div>
+                        </div>
+                      </mat-card>
+
+                    </mat-card-content>
+                  </mat-card-actions>
+
+                </mat-card>
+
+              </div>
+            </div>
+          </td>
+        </ng-container>
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" [attr.colspan]="displayedColumnsExpand.length">No records found.</td>
+        </tr>
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsExpand"></tr>
+        <tr mat-row *matRowDef="let element; columns: displayedColumnsExpand"
+          [class.mat-expanded-row]="expandedElement === element" class="mat-element-row"
+          (click)="expandedElement = expandedElement === element ? null : element"></tr>
+        <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="mat-detail-row"></tr>
+      </table>
+    </div>
+
+    <!-- </div> -->
+    <mat-card *ngIf="loading" id="material-loading-bar">
+      <mat-progress-spinner color="warn" mode="indeterminate"> </mat-progress-spinner>
+    </mat-card>
+    <mat-paginator showFirstLastButtons ngClass="transparant" [length]="paginatorLength" [pageSize]="paginatorPageSize"
+      [pageSizeOptions]="paginatorPageSizeOption" (page)="loadDataLazy($event)">
+    </mat-paginator>
+  </mat-card-content>
+
+  <!-- <mat-paginator showFirstLastButtons ngClass="transparant" [length]="items?.data?.penduduk?.length"
+      </mat-paginator> -->
+
+
+  <div class="e-card-actions">
+    <div class="d-flex justify-content-center my-2">
+      <button mat-raised-button [routerLink]="['./create']" class="button-styling">ADD NEW PENDUDUK</button>
+    </div>
+  </div>
+
+</mat-card>

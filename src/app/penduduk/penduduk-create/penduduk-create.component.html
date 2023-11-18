@@ -1,0 +1,187 @@
+  <div class="row">
+    <div class="e-card">
+      <div class="e-card-header">
+        <div class="e-card-header-caption">
+          <div class="header-container">
+            <div class="header-content">
+              <img class="back-image" src="../../../content/images/back-icon.svg" (click)="openCancelDialog()" />
+              <span class="back-prefix" (click)="openCancelDialog()">Back | </span>
+            </div>
+            <p class="e-card-sub-title">Add New Penduduk</p>
+          </div>
+        </div>
+      </div>
+      <div style="margin: 1rem">
+        <mat-card>
+          <mat-card-header>
+            <mat-card-subtitle class="fw-bold">Add Permission</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <div class="form-group">
+              <mat-form-field class="w-100" appearance="outline">
+                <mat-label>Nama Penduduk</mat-label>
+                <input matInput type="text" name="namaLengkap" [(ngModel)]="penduduk.namaLengkap" required />
+              </mat-form-field>
+            </div>
+            <div class="form-group">
+              <mat-form-field class="w-100" appearance="outline">
+                <mat-label>No KTP</mat-label>
+                <input matInput type="text" name="noKtp" [(ngModel)]="penduduk.noKtp" />
+              </mat-form-field>
+            </div>
+            <div class="form-group">
+              <mat-form-field class="w-100" appearance="outline">
+                <mat-label>Kartu Keluarga</mat-label>
+                <input matInput type="text" name="noKK" [(ngModel)]="penduduk.kartuKeluarga.noKK" required />
+              </mat-form-field>
+            </div>
+            <div class="form-group">
+              <mat-form-field class="w-100" appearance="outline">
+                <mat-label>Nama Kepala Keluarga</mat-label>
+                <input matInput type="text" name="namaKepalaKeluarga"
+                  [(ngModel)]="penduduk.kartuKeluarga.namaKepalaKeluarga" required />
+
+              </mat-form-field>
+            </div>
+            <div class="form-group">
+              <mat-form-field class="w-100" appearance="outline">
+                <mat-label>Jenis Kelamin</mat-label>
+                <mat-select [(ngModel)]="penduduk.jenisKelamin">
+                  <mat-option value="">- Please Select -</mat-option>
+                  <mat-option *ngFor="let item of listOfValue.jenisKelaminList" [value]="item">
+                    {{ item }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="form-group">
+              <mat-form-field class="w-100" appearance="outline">
+                <mat-label>Tempat Lahir</mat-label>
+                <input matInput type="text" [(ngModel)]="penduduk.tempatLahir" />
+              </mat-form-field>
+            </div>
+            <div class="form-group">
+              <mat-form-field class="w-100" appearance="outline">
+                <mat-label>From Date</mat-label>
+                <input matInput [matDatepicker]="pickerFromDate" [(ngModel)]="penduduk.tanggallahir" />
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matSuffix [for]="pickerFromDate"></mat-datepicker-toggle>
+                <mat-datepicker #pickerFromDate></mat-datepicker>
+              </mat-form-field>
+            </div>
+            <div class="form-group">
+              <mat-form-field class="w-100" appearance="outline">
+                <mat-label>Agama</mat-label>
+                <mat-select [(ngModel)]="penduduk.agama" name="agama">
+                  <mat-option value="">- Please Select -</mat-option>
+                  <mat-option *ngFor="let item of listOfValue.agamaList" [value]="item">
+                    {{ item }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="form-group">
+              <mat-form-field class="w-100" appearance="outline">
+                <mat-label>Pekerjaan</mat-label>
+                <input matInput type="text" [(ngModel)]="penduduk.pekerjaan" />
+              </mat-form-field>
+            </div>
+            <div class="form-group">
+              <mat-form-field class="w-100" appearance="outline">
+                <mat-label>Pendidikan</mat-label>
+                <mat-select [(ngModel)]="penduduk.pendidikan">
+                  <mat-option value="">- Please Select -</mat-option>
+                  <mat-option *ngFor="let item of listOfValue.pendidikanList" [value]="item">
+                    {{ item }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="form-group">
+              <mat-form-field class="w-100" appearance="outline">
+                <mat-label>Status Keluarga</mat-label>
+                <mat-select [(ngModel)]="penduduk.statusKeluarga">
+                  <mat-option value="">- Please Select -</mat-option>
+                  <mat-option *ngFor="let item of listOfValue.statusKeluargaList" [value]="item">
+                    {{ item }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="form-group">
+              <mat-form-field class="w-100" appearance="outline">
+                <mat-label>Status Perkawinan</mat-label>
+                <mat-select [(ngModel)]="penduduk.statusPerkawinan">
+                  <mat-option value="">- Please Select -</mat-option>
+                  <mat-option *ngFor="let item of listOfValue.statusperkawinanList" [value]="item">
+                    {{ item }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="form-group">
+              <mat-form-field class="w-100" appearance="outline">
+                <mat-label>Telepon</mat-label>
+                <input matInput type="text" [(ngModel)]="penduduk.telepon" />
+              </mat-form-field>
+            </div>
+            <div class="form-group">
+              <mat-form-field class="w-100" appearance="outline">
+                <mat-label>Alamat</mat-label>
+                <input matInput type="text" [(ngModel)]="penduduk.alamat" />
+              </mat-form-field>
+            </div>
+            <div class="form-group">
+              <mat-form-field class="w-100" appearance="outline">
+                <mat-label>RT</mat-label>
+                <input matInput type="text" [(ngModel)]="penduduk.rt" />
+              </mat-form-field>
+            </div>
+            <div class="form-group">
+              <mat-form-field class="w-100" appearance="outline">
+                <mat-label>RW</mat-label>
+                <input matInput type="text" [(ngModel)]="penduduk.rw" />
+              </mat-form-field>
+            </div>
+            <div class="form-group">
+              <mat-form-field class="w-100" appearance="outline">
+                <mat-label>Kelurahan</mat-label>
+                <input matInput type="text" [(ngModel)]="penduduk.kelurahan" />
+              </mat-form-field>
+            </div>
+            <div class="form-group">
+              <mat-form-field class="w-100" appearance="outline">
+                <mat-label>Kecamatan</mat-label>
+                <input matInput type="text" [(ngModel)]="penduduk.kecamatan" />
+              </mat-form-field>
+            </div>
+            <div class="form-group">
+              <mat-form-field class="w-100" appearance="outline">
+                <mat-label>Kota</mat-label>
+                <input matInput type="text" [(ngModel)]="penduduk.kota" />
+              </mat-form-field>
+            </div>
+            <div class="form-group">
+              <mat-form-field class="w-100" appearance="outline">
+                <mat-label>Kode Pos</mat-label>
+                <input matInput type="text" [(ngModel)]="penduduk.kodePos" />
+              </mat-form-field>
+            </div>
+            <div class="form-group">
+              <input type="file" (change)="onFileSelected($event)" />
+            </div>
+
+            <!-- Display the selected photo -->
+            <div class="form-group file">
+              <img *ngIf="selectedFileUrl" [src]="selectedFileUrl" alt="Selected Photo" class="selected-photo" />
+            </div>
+
+          </mat-card-content>
+        </mat-card>
+        <br />
+        <mat-card-actions class="button-styling-moz" style="justify-content: center;">
+          <button class="submit-button button-styling" type="submit" mat-raised-button (click)="save()">Save</button>
+        </mat-card-actions>
+      </div>
+    </div>
+  </div>

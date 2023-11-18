@@ -3,7 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  apiUrl: 'http://localhost:8089', // Ganti dengan URL backend Anda
+  minioUrl: 'http://minio:9000', // Endpoint Minio
 };
 
 /*
