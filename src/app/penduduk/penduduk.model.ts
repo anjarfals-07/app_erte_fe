@@ -21,8 +21,7 @@ export interface IPenduduk {
   kecamatan?: string;
   kota?: string;
   kodePos?: string;
-  foto?: File;
-  // ...
+  foto?: File | null;
   fotoUrl?: string;
 }
 
@@ -30,7 +29,7 @@ export class Penduduk implements IPenduduk {
   constructor(
     public id?: number,
     public noKtp?: string,
-    public kartuKeluarga?: IKartuKeluarga | null,
+    public kartuKeluarga?: IKartuKeluarga,
     public namaLengkap?: string,
     public tanggallahir?: Date | string,
     public tempatLahir?: string,
@@ -48,7 +47,8 @@ export class Penduduk implements IPenduduk {
     public kecamatan?: string,
     public kota?: string,
     public kodePos?: string,
-    public foto?: File
+    public foto?: File | null,
+    public fotoUrl?: string
   ) {
     this.kartuKeluarga = new KartuKeluarga();
   }

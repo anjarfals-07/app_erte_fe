@@ -17,41 +17,74 @@ import { JhiResolvePagingParams } from '../shared/base/resolve-paging-params.ser
 import { PendudukUpdateComponent } from './penduduk-update/penduduk-update.component';
 
 @Injectable({ providedIn: 'root' })
-export class PendudukResolve {
-  // resolve(
-  //   route: ActivatedRouteSnapshot
-  // ): Observable<IPenduduk> | Observable<never> {
-  //   const useTemplate = 'default';
-  //   const id = route.params['id'];
-  //   if (id) {
-  //     return this.service.find(id).pipe(
-  //       mergeMap((penduduk: HttpResponse<Penduduk>) => {
-  //         if (penduduk.body) {
-  //           return of(penduduk.body);
-  //         } else {
-  //           this.router.navigate(['404']);
-  //           return EMPTY;
-  //         }
-  //       })
-  //     );
-  //   }
-  //   if (useTemplate) {
-  //     return this.service.template(useTemplate).pipe(
-  //       map((res: HttpResponse<IPenduduk>) => res.body),
-  //       mergeMap((res) => {
-  //         if (res) {
-  //           return of(res);
-  //         } else {
-  //           this.router.navigate(['404']);
-  //           return EMPTY;
-  //         }
-  //       })
-  //     );
-  //   }
-  //   const newItem = new Penduduk();
-  //   return of(newItem);
-  // }
+export class PendudukResolve implements Resolve<IPenduduk> {
+  constructor(private service: PendudukService, private router: Router) {}
+  resolve(route: ActivatedRouteSnapshot): IPenduduk | Observable<IPenduduk> {
+    const useTemplate = '';
+    const id = route.params['id'];
+    if (id) {
+      return this.service.find(id).pipe(
+        mergeMap((cif: HttpResponse<Penduduk>) => {
+          if (cif.body) {
+            return of(cif.body);
+          } else {
+            this.router.navigate(['404']);
+            return EMPTY;
+          }
+        })
+      );
+    }
+    if (useTemplate) {
+      return this.service.template(useTemplate).pipe(
+        map((res: HttpResponse<IPenduduk>) => res.body),
+        mergeMap((res) => {
+          if (res) {
+            return of(res);
+          } else {
+            this.router.navigate(['404']);
+            return EMPTY;
+          }
+        })
+      );
+    }
+    const newItem = new Penduduk();
+    return of(newItem);
+  }
 }
+// resolve(
+//   route: ActivatedRouteSnapshot
+// ): Observable<IPenduduk> | Observable<never> {
+//   const useTemplate = 'default';
+//   const id = route.params['id'];
+//   if (id) {
+//     return this.service.find(id).pipe(
+//       mergeMap((penduduk: HttpResponse<Penduduk>) => {
+//         if (penduduk.body) {
+//           return of(penduduk.body);
+//         } else {
+//           this.router.navigate(['404']);
+//           return EMPTY;
+//         }
+//       })
+//     );
+//   }
+//   if (useTemplate) {
+//     return this.service.template(useTemplate).pipe(
+//       map((res: HttpResponse<IPenduduk>) => res.body),
+//       mergeMap((res) => {
+//         if (res) {
+//           return of(res);
+//         } else {
+//           this.router.navigate(['404']);
+//           return EMPTY;
+//         }
+//       })
+//     );
+//   }
+//   const newItem = new Penduduk();
+//   return of(newItem);
+// }
+// }
 
 export const pendudukRoute: Routes = [
   {
@@ -68,11 +101,17 @@ export const pendudukRoute: Routes = [
     // canActivate: [UserRouteAccessService],
   },
   {
-    path: 'create',
+    path: 'creatependuduk',
     component: PendudukCreateComponent,
+    resolve: {
+      content: PendudukResolve,
+    },
   },
   {
-    path: ':id/edit',
+    path: ':id',
     component: PendudukUpdateComponent,
+    // resolve: {
+    //   penduduk: PendudukResolve,
+    // },
   },
 ];

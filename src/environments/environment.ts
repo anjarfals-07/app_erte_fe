@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   apiUrl: 'http://localhost:8089', // Ganti dengan URL backend Anda
-  minioUrl: 'http://minio:9000', // Endpoint Minio
+  minioUrl: 'http://127.0.0.1:9000', // Endpoint Minio
 };
 
 /*

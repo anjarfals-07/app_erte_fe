@@ -99,11 +99,11 @@ export class AbstractEntityService<T> {
       );
   }
 
-  update(entity: T, params?: any): Observable<HttpResponse<T>> {
+  update(entity: T, id: any, params?: any): Observable<HttpResponse<T>> {
     this.preSave(entity);
     const options = createRequestOption(params);
     return this.http
-      .put<T>(this.resourceUrl, entity, {
+      .put<T>(`${this.resourceUrl}/${id}`, entity, {
         observe: 'response',
         params: options,
       })
@@ -231,7 +231,7 @@ export class AbstractEntityService<T> {
 
   template(id: any): Observable<HttpResponse<T>> {
     return this.http
-      .get<T>(`${this.resourceUrl}/template/${id}`, { observe: 'response' })
+      .get<T>(`${this.resourceUrl}/${id}`, { observe: 'response' })
       .pipe(map((res: HttpResponse<T>) => this.convertDateFromServer(res)))
       .pipe(map((res: HttpResponse<T>) => this.preLoadItem(res)));
   }

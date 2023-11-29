@@ -30,7 +30,7 @@
         <!-- Symbol Column -->
         <ng-container matColumnDef="jk">
           <th mat-header-cell *matHeaderCellDef> Jenis Kelamin </th>
-          <td mat-cell *matCellDef="let element"> {{element.jeniskelamin}} </td>
+          <td mat-cell *matCellDef="let element"> {{element.jenisKelamin}} </td>
         </ng-container>
         <ng-container matColumnDef="ttl">
           <th mat-header-cell *matHeaderCellDef> Tempat/Tanggal Lahir </th>
@@ -48,11 +48,6 @@
           <td mat-cell *matCellDef="let element"> {{element.statusPerkawinan }}
           </td>
         </ng-container>
-        <!-- <ng-container matColumnDef="foto">
-          <th mat-header-cell *matHeaderCellDef> Foto</th>
-          <td mat-cell *matCellDef="let element"> {{element.fotoUrl }}
-          </td>
-        </ng-container> -->
         <ng-container matColumnDef="foto">
           <th mat-header-cell *matHeaderCellDef> Foto </th>
           <td mat-cell *matCellDef="let element">
@@ -63,10 +58,12 @@
         <ng-container matColumnDef="action">
           <th mat-header-cell *matHeaderCellDef>Action</th>
           <td mat-cell *matCellDef="let element">
-            <a href="javascript:void();" [routerLink]="[element.id, 'edit']" mat-icon-button
-              (click)="$event.stopPropagation()">
+            <a href="javascript:void();" [routerLink]="[element.id]" mat-icon-button (click)="$event.stopPropagation()">
               <fa-icon icon="pencil-alt"></fa-icon>
             </a>
+            <button mat-icon-button (click)="onDelete(element)" (click)="$event.stopPropagation()">
+              <mat-icon>delete</mat-icon>
+            </button>
           </td>
         </ng-container>
         <ng-container matColumnDef="expand">
@@ -179,7 +176,7 @@
 
   <div class="e-card-actions">
     <div class="d-flex justify-content-center my-2">
-      <button mat-raised-button [routerLink]="['./create']" class="button-styling">ADD NEW PENDUDUK</button>
+      <button mat-raised-button [routerLink]="['./creatependuduk']" class="button-styling">ADD NEW PENDUDUK</button>
     </div>
   </div>
 

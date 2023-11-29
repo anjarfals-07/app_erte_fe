@@ -20,6 +20,8 @@ import {
 } from '@angular/animations';
 import { IPenduduk } from './penduduk.model';
 import * as lodash from 'lodash';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-penduduk',
@@ -63,7 +65,8 @@ export class PendudukComponent
     protected _snackbar: MatSnackBar,
     protected pendudukService: PendudukService,
     private route: Router,
-    private actvatedRoutei: ActivatedRoute
+    private actvatedRoutei: ActivatedRoute,
+    protected dialog: MatDialog
   ) {
     super(_snackbar, pendudukService);
     this.page = 0;
@@ -91,6 +94,25 @@ export class PendudukComponent
         },
         error: (res: HttpErrorResponse) => this.onError(res.message),
       });
+  }
+
+  // Delete Confirmation
+  public onDelete(element: any): void {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '25vw',
+      data: {
+        title: 'Delete Category',
+        message: 'Are you sure to delete this data?',
+      },
+      panelClass: 'custom-dialog-container-delete',
+    });
+    dialogRef.afterClosed().subscribe((res) => {
+      if (res) {
+        this.pendudukService.delete(element.id).subscribe(() => {
+          this.loadAll();
+        });
+      }
+    });
   }
 
   protected override postLoadDataLazy(): void {
