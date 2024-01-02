@@ -15,8 +15,6 @@ import { AbstractEntityService } from './abstract-entity.service';
   template: '',
 })
 export class AbstractEntityMaterialComponent<T> {
-  @Input() mode: 'card' | 'item' | 'edit' | 'simple' | 'view' | 'loan' = 'edit';
-
   protected entityKeyName: string;
   protected reverse: any;
 
@@ -31,7 +29,6 @@ export class AbstractEntityMaterialComponent<T> {
   @ViewChild(MatSort) sort: MatSort;
 
   public items: any;
-  public itemsPartner: any;
 
   public paginatorLength: number;
   public paginatorPageSize: number;
@@ -47,10 +44,10 @@ export class AbstractEntityMaterialComponent<T> {
     protected messageService?: MessageService
   ) {}
 
-  addIdx(data: Record<string, any>[]): Record<string, any>[] {
+  addIdx(data: Object[]) {
     if (data.length > 0 && data) {
       for (let i = 0; i < data.length; i++) {
-        data[i]['idx'] = i;
+        (data[i] as any)['idx'] = i;
       }
     }
 
@@ -60,6 +57,19 @@ export class AbstractEntityMaterialComponent<T> {
   protected manipulateData(data: T[]): Object[] {
     return data;
   }
+
+  // initDataForMatTable(data: any, headers: HttpHeaders) {
+  //   this.items = new MatTableDataSource(
+  //     this.addIdx(this.manipulateData(data.body))
+  //   );
+  //   if (!this.items) {
+  //     this.items.paginator = this.paginator;
+  //   }
+  //   this.items.sort = this.sort;
+  //   this.paginatorLength = parseInt(headers.get('X-Total-Count'), 10);
+  //   this.paginatorPageSize = this.paginator.pageSize;
+  //   this.loading = false;
+  // }
 
   initDataForMatTable(data: any, headers: HttpHeaders) {
     this.items = new MatTableDataSource(
@@ -73,6 +83,13 @@ export class AbstractEntityMaterialComponent<T> {
     this.paginatorPageSize = this.paginator.pageSize;
     this.loading = false;
   }
+
+  // loadDataLazy(event?: PageEvent) {
+  //   this.items.data = null;
+  //   this.page = event.pageIndex;
+  //   this.itemsPerPage = event.pageSize;
+  //   this.postLoadDataLazy();
+  // }
 
   loadDataLazy(event?: PageEvent) {
     this.items = null;
@@ -136,8 +153,4 @@ export class AbstractEntityMaterialComponent<T> {
   }
 
   protected postLoadDataLazy() {}
-}
-interface MyObject {
-  idx: number;
-  // Add other properties if needed
 }

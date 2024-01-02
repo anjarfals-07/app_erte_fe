@@ -9,6 +9,9 @@
     "erte-web-app": {
       "projectType": "application",
       "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        },
         "@schematics/angular:application": {
           "strict": true
         }
@@ -25,16 +28,19 @@
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
             "assets": [
               "src/favicon.ico",
               "src/assets",
               "src/contents"
             ],
             "styles": [
+              "src/contents/scss/styles.scss",
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
-              "src/app/static/js/jquery.js",
-              "src/styles.css"
+              "node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
+              "node_modules/primeng/resources/primeng.min.css",
+              "node_modules/primeng/resources/themes/arya-blue/theme.css",
+              "node_modules/primeicons/primeicons.css"
             ],
             "scripts": []
           },
@@ -101,7 +107,6 @@
               "src/assets"
             ],
             "styles": [
-              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.css"
             ],
             "scripts": []

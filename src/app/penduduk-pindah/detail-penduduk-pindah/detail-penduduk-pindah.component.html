@@ -1,0 +1,101 @@
+<mat-dialog-content>
+  <mat-card class="example-card">
+    <mat-card-header>
+      <mat-card-title>Detail Data Penduduk</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div [hidden]="true">
+        <mat-card-subtitle class="sub-title">Data Pindah</mat-card-subtitle>
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Kode Pindah</mat-label>
+          <input matInput [(ngModel)]="dataPindah.id">
+        </mat-form-field>
+      </div>
+
+      <div class="row">
+        <div class="col-6">
+          <mat-card class="card-border mt-3">
+            <mat-card-subtitle class="sub-title">Data Pindah</mat-card-subtitle>
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Kode Pindah</mat-label>
+              <input matInput [(ngModel)]="dataPindah.kodePindah" readonly>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Tanggal Pindah</mat-label>
+              <input matInput [(ngModel)]="dataPindah.tanggalPindah" readonly>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Alamat Pindah</mat-label>
+              <input matInput [(ngModel)]="dataPindah.alamatPindah" readonly>
+            </mat-form-field>
+          </mat-card>
+        </div>
+        <div class="col-6">
+          <mat-card class="card-border mt-3">
+            <mat-card-subtitle class="sub-title">Data Surat Pindah</mat-card-subtitle>
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>No Surat Pindah</mat-label>
+              <input matInput [(ngModel)]="dataPindah.suratKeteranganPindah.noSuratPindah" readonly>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Tanggal Surat Pindah</mat-label>
+              <input matInput [(ngModel)]="dataPindah.suratKeteranganPindah.tanggalSuratPindah" readonly>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Keterangan Pindah</mat-label>
+              <input matInput [(ngModel)]="dataPindah.suratKeteranganPindah.keteranganPindah" readonly>
+            </mat-form-field>
+          </mat-card>
+        </div>
+      </div>
+
+      <mat-card class="card-border mt-3">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Nomer KK</mat-label>
+          <input matInput placeholder="Enter keyword" [(ngModel)]="penduduk.kartuKeluarga.noKK"
+            (ngModelChange)="onNoKKChange()">
+          <button mat-button matSuffix mat-icon-button aria-label="Search" (click)="searchNoKK()">
+            <mat-icon>search</mat-icon>
+          </button>
+          <button mat-button matSuffix mat-icon-button aria-label="Clear" (click)="   this.clearSearch();">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Select No KTP</mat-label>
+          <mat-select [(ngModel)]="selectedPenduduk" (ngModelChange)="selectPenduduk(selectedPenduduk)"
+            [disabled]="isNoKtpDisabled">
+            <mat-option value="">- Please Select -</mat-option>
+            <mat-option *ngFor="let penduduk of getNoKtp" [value]="penduduk">{{ penduduk.noKtp }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <!-- Display Selected Penduduk Information -->
+        <div *ngIf="selectedPenduduk">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Id</mat-label>
+            <input matInput [(ngModel)]="selectedPenduduk.id" readonly>
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Nama Lengkap</mat-label>
+            <input matInput [(ngModel)]="selectedPenduduk.namaLengkap" readonly>
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Jenis Kelamin</mat-label>
+            <input matInput [(ngModel)]="selectedPenduduk.jenisKelamin" readonly>
+          </mat-form-field>
+        </div>
+      </mat-card>
+
+
+    </mat-card-content>
+
+  </mat-card>
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="center">
+  <button mat-raised-button class="confirm-button-no" (click)="openCancelDialog()">CLOSE</button>
+  <button mat-raised-button class="confirm-button-yes" (click)="save()">SAVE</button>
+</mat-dialog-actions>

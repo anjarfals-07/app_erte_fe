@@ -37,6 +37,7 @@ export class PendudukUpdateComponent {
       'Lainnya',
     ],
     jenisKelaminList: ['Laki - Laki', 'Perempuan', 'Lainnya'],
+    statusPenduduk: ['Tetap', 'Pendatang', 'Pindah', 'Meninggal'],
   };
   selectedFile: File | null = null;
   selectedFileUrl: string | ArrayBuffer | null = null;

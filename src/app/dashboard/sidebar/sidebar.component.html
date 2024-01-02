@@ -24,17 +24,22 @@
       </mat-list-item>
       <mat-list-item routerLink="/penduduk" class="nav-item">
         <button routerLink="/penduduk" mat-button class="btn-nav">
-          <mat-icon>home</mat-icon> Penduduk
+          <mat-icon>supervised_user_circle</mat-icon> Penduduk
         </button>
       </mat-list-item>
       <mat-list-item class="nav-item">
-        <button routerLink="slider" mat-button class="btn-nav">
-          <mat-icon>explore</mat-icon> Penduduk Pindah
+        <button routerLink="/penduduk-pindah" mat-button class="btn-nav">
+          <mat-icon>swap_horizontal_circle</mat-icon> Penduduk Pindah
+        </button>
+      </mat-list-item>
+      <mat-list-item routerLink="/penduduk-meninggal" class="nav-item">
+        <button routerLink="/penduduk-meninggal" mat-button class="btn-nav">
+          <mat-icon>local_hospital</mat-icon> Penduduk Meninggal
         </button>
       </mat-list-item>
       <mat-list-item class="nav-item">
-        <button routerLink="table" mat-button class="btn-nav">
-          <mat-icon>table</mat-icon> Penduduk Meninggal
+        <button mat-button class="btn-nav">
+          <mat-icon>email</mat-icon> Surat Pengantar
         </button>
       </mat-list-item>
       <mat-list-item class="nav-item">
@@ -42,17 +47,11 @@
           <mat-icon>settings</mat-icon> Settings
         </button>
       </mat-list-item>
-      <mat-list-item class="nav-item">
-        <button mat-button class="btn-nav">
-          <mat-icon>help</mat-icon> Surat Pengantar
-        </button>
-      </mat-list-item>
     </mat-nav-list>
 
   </mat-drawer>
   <mat-drawer-content>
     <div style="text-align: center;min-height: 600px;">
-
       <router-outlet></router-outlet>
     </div>
   </mat-drawer-content>

@@ -41,6 +41,7 @@ export class PendudukCreateComponent
       'Lainnya',
     ],
     jenisKelaminList: ['Laki - Laki', 'Perempuan', 'Lainnya'],
+    statusPenduduk: ['Tetap', 'Pendatang', 'Pindah', 'Meninggal'],
   };
   selectedFile: File | null = null;
   selectedFileUrl: string | ArrayBuffer | null = null;
@@ -121,5 +122,12 @@ export class PendudukCreateComponent
   // Helper function to format date
   private formatDate(date: Date): string {
     return this.datePipe.transform(date, 'yyyy-MM-dd');
+  }
+  test() {
+    this.messageService.add({
+      severity: 'success',
+      summary: 'Success',
+      detail: 'Save Successful',
+    });
   }
 }

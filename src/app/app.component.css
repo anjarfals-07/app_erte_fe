@@ -2,3 +2,7 @@
   background: #000;
   color: #fff;
 }
+
+.p-toast .p-toast-message .p-toast-message-content .p-toast-detail {
+  white-space: pre-line;
+}

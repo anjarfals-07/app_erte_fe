@@ -1,0 +1,917 @@
+@import 'bootstrap-variables';
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+// @import 'roboto.scss';
+@import 'material-icons.scss';
+
+/* ==============================================================
+Fonts
+===============================================================*/
+
+@font-face {
+  font-family: 'poppins-regular';
+  src: url('../fonts/poppins/Poppins-Regular.ttf') format('truetype');
+}
+
+/* ==============================================================
+Bootstrap tweaks
+===============================================================*/
+
+html {
+  font-family: 'poppins-regular';
+  height: 100% !important;
+}
+
+body,
+h1,
+h2,
+h3,
+h4 {
+  font-family: 'Poppins', sans-serif !important;
+  font-weight: 300;
+}
+
+/* Increase contrast of links to get 100% on Lighthouse Accessability Audit. Override this color if you want to change the link color, or use a Bootswatch theme */
+
+a {
+  color: black;
+  font-family: 'poppins-regular';
+  text-decoration: none;
+}
+
+a:hover {
+  color: #000;
+}
+
+.container-fluid {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+div.page-content {
+  background-color: #fff;
+  padding: 10px;
+}
+
+ul.side-menu {
+  margin-top: 10px;
+  list-style: none;
+  padding-left: 0.5rem;
+
+  li {
+    margin: 20px 0px;
+
+    span {
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    a {
+      font-size: 1rem;
+      font-weight: 600;
+    }
+  }
+
+  ul {
+    margin-top: 5px;
+    padding-left: 2.3rem;
+  }
+}
+
+.transparant {
+  border: 0px !important;
+  background: none !important;
+}
+
+.mat-table-wrapper {
+  overflow-x: auto;
+  width: 100%;
+
+  .mat-table {
+    min-width: 1000px;
+    width: 100%;
+  }
+}
+
+div.page-content .divider {
+  height: 1px;
+  border: 1px solid #cfd1ca;
+  width: 100%;
+}
+
+input.text:read-only {
+  background-color: #e4e5e3 !important;
+}
+
+#material-loading-bar.mat-card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+section.content {
+  background-color: inherit;
+}
+
+// remove warning ej2 license
+#js-licensing {
+  display: none;
+}
+
+section.content {
+  background-color: inherit;
+
+  .title {
+    color: white;
+    padding: 20px 10px;
+  }
+
+  div.sub-content {
+    background-color: white;
+
+    div.sub-content-title {
+      background-color: #009591;
+      padding: 20px 10px;
+    }
+  }
+}
+
+.tab-content {
+  .title {
+    background-color: #009591;
+    padding: 20px 10px;
+  }
+}
+
+.mat-drawer-container,
+.mat-drawer-content {
+  overflow: unset !important;
+}
+
+.flex-container {
+  display: flex;
+  div {
+    margin: 5px;
+    padding: 10px;
+  }
+}
+
+table.mat-table-expand {
+  width: 100%;
+
+  tr.mat-element-row:not(.mat-expanded-row):hover {
+    background: whitesmoke;
+  }
+
+  tr.mat-element-row:not(.mat-expanded-row):active {
+    background: #efefef;
+  }
+
+  tr.mat-detail-row {
+    height: 0;
+  }
+
+  .mat-element-detail {
+    overflow: hidden;
+    display: flex;
+  }
+}
+
+.black {
+  color: #000;
+}
+
+.btn-menu-floating {
+  position: fixed !important;
+  bottom: 60px;
+  right: 30px;
+  transform: translate(10px, 20px) !important;
+}
+
+.completed-data {
+  color: #009591;
+}
+
+.table-responsive-material {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+
+  .mat-table {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 1rem;
+    display: table;
+    border-collapse: collapse;
+    margin: 0px;
+  }
+
+  .mat-row,
+  .mat-header-row {
+    display: table-row;
+  }
+
+  .mat-cell,
+  .mat-header-cell {
+    word-wrap: initial;
+    display: table-cell;
+    padding: 0px 5px;
+    line-break: unset;
+    width: auto;
+    white-space: nowrap;
+    overflow: hidden;
+    vertical-align: middle;
+  }
+}
+
+/* override hover color for dropdown-item forced by bootstrap to all a:not([href]):not([tabindex]) elements in _reboot.scss */
+
+a:not([href]):not([tabindex]):hover.dropdown-item {
+  color: $dropdown-link-hover-color;
+}
+
+/* override .dropdown-item.active background-color on hover */
+
+.dropdown-item.active:hover {
+  background-color: mix($dropdown-link-hover-bg, $dropdown-link-active-bg, 50%);
+}
+
+// override
+.mat-toolbar-row,
+.mat-toolbar-single-row {
+  height: $navbar-height;
+}
+
+a:hover {
+  /* make sure browsers use the pointer cursor for anchors, even with no href */
+  cursor: pointer;
+}
+
+div.grid-column {
+  display: grid;
+  grid-template-columns: 80% 20%;
+}
+
+div.subnav-anchor {
+  top: 5rem !important;
+  padding: 15px;
+}
+
+div.subnav-container-left {
+  grid-column: 1;
+}
+
+div.subnav-container-right {
+  grid-column: 2;
+}
+
+.dropdown-item:hover {
+  color: $dropdown-link-hover-color;
+}
+
+/* ==========================================================================
+Browser Upgrade Prompt
+========================================================================== */
+
+.browserupgrade {
+  margin: 0.5em 0;
+  background: #ccc;
+  color: #000;
+  padding: 0.5em 0;
+}
+
+/* ==========================================================================
+Generic styles
+========================================================================== */
+
+/* Error highlight on input fields */
+
+.ng-valid[required],
+.ng-valid.required {
+  border-left: 5px solid green;
+}
+
+.ng-invalid:not(form) {
+  border-left: 5px solid red;
+}
+
+/* other generic styles */
+
+.jh-card {
+  padding: 1.5%;
+  margin-top: 20px;
+  border: none;
+}
+
+.error {
+  color: white;
+  background-color: red;
+}
+
+.pad {
+  padding: 10px;
+}
+
+.w-40 {
+  width: 40% !important;
+}
+
+.w-60 {
+  width: 60% !important;
+}
+
+.break {
+  white-space: normal;
+  word-break: break-all;
+}
+
+.form-control {
+  background-color: #fff;
+}
+
+.readonly {
+  background-color: #eee;
+  opacity: 1;
+}
+
+.footer {
+  border-top: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.hand,
+[jhisortby] {
+  cursor: pointer;
+}
+
+/* ==========================================================================
+Custom alerts for notification
+========================================================================== */
+
+.alerts {
+  .alert {
+    text-overflow: ellipsis;
+
+    pre {
+      background: none;
+      border: none;
+      font: inherit;
+      color: inherit;
+      padding: 0;
+      margin: 0;
+    }
+
+    .popover pre {
+      font-size: 10px;
+    }
+  }
+
+  .jhi-toast {
+    position: fixed;
+    width: 100%;
+
+    &.left {
+      left: 5px;
+    }
+
+    &.right {
+      right: 5px;
+    }
+
+    &.top {
+      top: 55px;
+    }
+
+    &.bottom {
+      bottom: 55px;
+    }
+  }
+}
+
+@media screen and (min-width: 480px) {
+  .alerts .jhi-toast {
+    width: 50%;
+  }
+}
+
+/* ==========================================================================
+entity detail page css
+========================================================================== */
+
+.row-md.jh-entity-details {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 10px;
+  line-height: 1.5;
+}
+
+@media screen and (min-width: 768px) {
+  .row-md.jh-entity-details > {
+    dt {
+      float: left;
+      overflow: hidden;
+      clear: left;
+      text-align: right;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      padding: 0.5em 0;
+    }
+
+    dd {
+      border-bottom: 1px solid #eee;
+      padding: 0.5em 0;
+      margin-left: 0;
+    }
+  }
+}
+
+/* ==========================================================================
+ui bootstrap tweaks
+========================================================================== */
+
+.nav,
+.pagination,
+.carousel,
+.panel-title a {
+  cursor: pointer;
+}
+
+.thread-dump-modal-lock {
+  max-width: 450px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dropdown-menu {
+  padding-left: 0px;
+}
+
+/* ==========================================================================
+angular-cli removes postcss-rtl processed inline css, processed rules must be added here instead
+========================================================================== */
+
+/* page-ribbon.component.scss */
+
+.ribbon {
+  left: -3.5em;
+  -moz-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  -o-transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+}
+
+/* navbar.component.scss */
+
+.navbar {
+  ul.navbar-nav {
+    .nav-item {
+      margin-left: 0.5em;
+    }
+  }
+}
+
+/* jhipster-needle-scss-add-main JHipster will add new css style */
+
+$font-color: #555555;
+
+.flat-button {
+  background: none !important;
+  border: none !important;
+  color: $font-color !important;
+  opacity: 0.75;
+  transition: all 0.3s;
+  cursor: pointer;
+  width: 26px !important;
+  height: 28px !important;
+
+  &:hover {
+    opacity: 1;
+  }
+
+  .ui-button-text {
+    padding: 0;
+  }
+}
+
+.big-flat-button {
+  font-size: 1rem;
+  width: 28px !important;
+  height: 28px !important;
+  transition: all 0.3s;
+  cursor: pointer;
+  opacity: 0.75;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.flat-style-button {
+  background: none !important;
+  border: none !important;
+  color: $font-color !important;
+  opacity: 0.75;
+  transition: all 0.3s;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.flat-label-button {
+  background: none !important;
+  color: $font-color !important;
+  height: 30px !important;
+  opacity: 0.4;
+  transition: all 0.3s;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.page-heading {
+  margin-top: 0px;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.page-view {
+  border: none;
+}
+
+.ui-chkbox {
+  vertical-align: baseline;
+}
+
+.ui-chkbox .ui-chkbox-box {
+  margin-left: -1.25em;
+}
+
+body .ui-chkbox-label {
+  margin: 0 0 0 -0.75em;
+}
+
+body .ui-paginator {
+  padding: 3px;
+}
+
+.ui-fluid p-autocomplete,
+.ui-fluid .ui-autocomplete,
+.ui-fluid .ui-autocomplete-input {
+  margin-left: -5px;
+}
+
+body .ui-toast .ui-toast-message {
+  -webkit-box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+  -moz-box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+  margin: 0 0 1em 0;
+}
+
+body .ui-toast .ui-toast-message.ui-toast-message-info {
+  background-color: #7fbcec;
+  border: 0 none;
+  color: #212121;
+}
+
+body .ui-toast .ui-toast-message.ui-toast-message-info .ui-toast-close-icon {
+  color: #212121;
+}
+
+body .ui-toast .ui-toast-message.ui-toast-message-success {
+  background-color: #b7d8b7;
+  border: 0 none;
+  color: #212121;
+}
+
+body .ui-toast .ui-toast-message.ui-toast-message-success .ui-toast-close-icon {
+  color: #212121;
+}
+
+body .ui-toast .ui-toast-message.ui-toast-message-warn {
+  background-color: #ffe399;
+  border: 0 none;
+  color: #212121;
+}
+
+body .ui-toast .ui-toast-message.ui-toast-message-warn .ui-toast-close-icon {
+  color: #212121;
+}
+
+body .ui-toast .ui-toast-message.ui-toast-message-error {
+  background-color: #f8b7bd;
+  border: 0 none;
+  color: #212121;
+}
+
+body .ui-toast .ui-toast-message.ui-toast-message-error .ui-toast-close-icon {
+  color: #212121;
+}
+
+div.page-header {
+  font-size: 1rem;
+}
+
+div.page-header > span.separate {
+  margin-left: 10px;
+  margin-right: 10px;
+  font-size: 1.5rem;
+}
+
+div.page-header > span.header {
+  color: rgba(200, 53, 78, 1);
+  font-weight: 600;
+  font-size: 1.5rem;
+}
+
+input#rteTool_toolbar_BackgroundColor_Target.e-rte-backgroundcolor-element {
+  display: none !important;
+}
+
+input#rteTool_toolbar_FontColor_Target.e-rte-fontcolor-element {
+  display: none !important;
+}
+
+// align center
+@-moz-document url-prefix() {
+  .align-center {
+    text-align: center;
+    margin: 0 auto;
+  }
+}
+
+// align-right
+@-moz-document url-prefix() {
+  .align-right {
+    margin-left: auto;
+    margin-right: 0;
+  }
+}
+
+/* Button yes no Styling */
+.confirm-button-yes {
+  padding: 3px 43px 3px 43px !important;
+  border-radius: 10px !important;
+  background-color: rgba(224, 223, 223, 1) !important;
+  font-weight: bold !important;
+  font-family: 'Poppins', sans-serif !important;
+}
+
+.confirm-button-no {
+  padding: 3px 43px 3px 43px !important;
+  border-radius: 10px !important;
+  background-color: rgba(224, 223, 223, 1) !important;
+  font-weight: bold !important;
+  font-family: 'Poppins', sans-serif !important;
+}
+.confirm-button-no:hover {
+  padding: 3px 43px 3px 43px !important;
+  border-radius: 10px !important;
+  background-color: #f44336 !important;
+  color: #ffff !important;
+  font-weight: bold !important;
+  font-family: 'Poppins', sans-serif !important;
+}
+.confirm-button-yes:active:hover:not([disabled]) {
+  padding: 3px 43px 3px 43px !important;
+  border-radius: 10px !important;
+  background-color: rgba(157, 157, 157, 1) !important;
+  color: #ffff !important;
+  font-weight: bold !important;
+  font-family: 'Poppins', sans-serif !important;
+}
+
+.confirm-button-yes:enabled:hover {
+  padding: 3px 43px 3px 43px !important;
+  border-radius: 10px !important;
+  background-color: rgba(49, 158, 152, 1) !important;
+  color: #ffff !important;
+  font-weight: bold !important;
+  font-family: 'Poppins', sans-serif !important;
+}
+
+.button-styling:enabled {
+  color: white !important;
+  background-color: rgba(49, 158, 152, 1) !important;
+  font-weight: bold !important;
+  font-family: 'Poppins', sans-serif !important;
+}
+
+.download-button:hover:enabled {
+  color: white !important;
+  background-color: rgba(49, 158, 152, 1) !important;
+  font-weight: bold !important;
+  font-family: 'Poppins', sans-serif !important;
+}
+
+.download-button:hover:enabled {
+  color: white !important;
+  background-color: rgba(49, 158, 152, 1) !important;
+  font-weight: bold !important;
+  font-family: 'Poppins', sans-serif !important;
+}
+
+/* Button yes no Styling */
+/* Table Styling */
+table {
+  mat-header-cell {
+    font-weight: bold !important;
+  }
+  th {
+    font-weight: bold !important;
+    background-color: rgba(147, 201, 199, 1) !important;
+    color: black !important;
+    font-family: 'Poppins', sans-serif !important;
+  }
+  th:first-child {
+    border-top-left-radius: 15px !important;
+  }
+  th:last-child {
+    border-top-right-radius: 15px !important;
+  }
+  td {
+    font-family: 'Poppins', sans-serif !important;
+  }
+}
+
+.mat-calendar-table-header-divider {
+  padding: 0 !important;
+}
+
+.header-title {
+  font-family: 'Poppins', sans-serif !important;
+  font-size: 18px !important;
+  font-weight: 600 !important;
+  color: #008881 !important;
+  line-height: 35px !important;
+  margin-left: 10px !important;
+  padding-top: 13px !important;
+}
+
+/* custom disabled ejs input/ material input */
+.mat-select-disabled .mat-select-value {
+  color: rgba(0, 0, 0, 0.7) !important;
+}
+
+// read-only
+// value
+.e-input-group .e-input[readonly],
+.e-input-group.e-control-wrapper .e-input[readonly],
+.e-float-input input[readonly],
+.e-float-input.e-control-wrapper input[readonly],
+.e-float-input textarea[readonly],
+.e-float-input.e-control-wrapper textarea[readonly] {
+  cursor: not-allowed !important;
+  color: rgba(0, 0, 0, 0.7) !important;
+}
+.e-input-group .e-input[readonly],
+.e-input-group.e-control-wrapper .e-input[readonly],
+.e-float-input input[readonly],
+.e-float-input.e-control-wrapper input[readonly],
+.e-float-input textarea[readonly],
+.e-float-input.e-control-wrapper textarea[readonly] {
+  border-top-color: transparent !important;
+  border-right-color: rgba(0, 0, 0, 0.06) !important;
+  border-bottom-color: rgba(0, 0, 0, 0.06) !important;
+  border-left-color: rgba(0, 0, 0, 0.06) !important;
+}
+
+.e-outline.e-input[readonly],
+.e-outline.e-input-group .e-input[readonly],
+.e-outline.e-input-group.e-control-wrapper .e-input[readonly],
+.e-outline.e-input-group.e-disabled,
+.e-outline.e-input-group.e-control-wrapper.e-disabled,
+.e-outline.e-float-input input[readonly],
+.e-outline.e-float-input.e-control-wrapper input[readonly],
+.e-outline.e-float-input textarea[readonly],
+.e-outline.e-float-input.e-control-wrapper textarea[readonly],
+.e-outline.e-float-input.e-disabled,
+.e-outline.e-float-input.e-control-wrapper.e-disabled,
+.e-outline.e-input-group:not(.e-success):not(.e-warning):not(.e-error):not(.e-float-icon-left).e-disabled,
+.e-outline.e-input-group.e-float-icon-left:not(.e-success):not(.e-warning):not(.e-error).e-disabled .e-input-in-wrap,
+.e-outline.e-input-group.e-control-wrapper:not(.e-success):not(.e-warning):not(.e-error):not(.e-float-icon-left).e-disabled,
+.e-outline.e-input-group.e-control-wrapper.e-float-icon-left:not(.e-success):not(.e-warning):not(.e-error).e-disabled .e-input-in-wrap {
+  background-image: none;
+  border-bottom-color: rgba(0, 0, 0, 0.06) !important;
+  border-color: rgba(0, 0, 0, 0.06) !important;
+}
+// label
+.e-float-input.e-control-wrapper:not(.e-error) input:focus ~ label.e-float-text,
+.e-float-input.e-control-wrapper:not(.e-error) input:valid ~ label.e-float-text,
+.e-float-input.e-control-wrapper:not(.e-error) input ~ label.e-label-top.e-float-text,
+.e-float-input.e-control-wrapper:not(.e-error) input[readonly] ~ label.e-label-top.e-float-text,
+.e-float-input.e-control-wrapper:not(.e-error) input[disabled] ~ label.e-label-top.e-float-text,
+.e-float-input .e-control-wrapper:not(.e-error) input label.e-float-text.e-label-top,
+.e-float-input.e-control-wrapper.e-bigger:not(.e-error) input:focus ~ label.e-float-text,
+.e-float-input.e-control-wrapper.e-bigger:not(.e-error) input:valid ~ label.e-float-text,
+.e-float-input.e-control-wrapper.e-bigger:not(.e-error) input ~ label.e-label-top.e-float-text,
+.e-float-input.e-control-wrapper.e-bigger:not(.e-error) input[readonly] ~ label.e-label-top.e-float-text,
+.e-float-input.e-control-wrapper.e-bigger:not(.e-error) input[disabled] ~ label.e-label-top.e-float-text,
+.e-bigger .e-float-input.e-control-wrapper:not(.e-error) input:focus ~ label.e-float-text,
+.e-bigger .e-float-input.e-control-wrapper:not(.e-error) input:valid ~ label.e-float-text,
+.e-bigger .e-float-input.e-control-wrapper:not(.e-error) input ~ label.e-label-top.e-float-text,
+.e-bigger .e-float-input.e-control-wrapper:not(.e-error) input[readonly] ~ label.e-label-top.e-float-text,
+.e-bigger .e-float-input.e-control-wrapper:not(.e-error) input[disabled] ~ label.e-label-top.e-float-text,
+.e-float-input.e-control-wrapper:not(.e-error).e-input-focus input ~ label.e-float-text,
+.e-float-input.e-control-wrapper.e-bigger:not(.e-error).e-input-focus input ~ label.e-float-text,
+.e-bigger .e-float-input.e-control-wrapper:not(.e-error).e-input-focus input ~ label.e-float-text {
+  color: rgba(0, 0, 0, 0.7) !important;
+}
+// read-only
+
+// disabled
+// field
+.mat-input-element:disabled,
+.mat-form-field-type-mat-native-select.mat-form-field-disabled .mat-form-field-infix::after {
+  color: rgba(0, 0, 0, 0.7) !important;
+  cursor: not-allowed !important;
+}
+.mat-form-field-infix:disabled {
+  color: rgba(0, 0, 0, 0.7) !important;
+  cursor: not-allowed !important;
+}
+.mat-select:disabled {
+  color: rgba(0, 0, 0, 0.7) !important;
+  cursor: not-allowed !important;
+}
+mat-select:disbled {
+  color: rgba(0, 0, 0, 0.7) !important;
+  cursor: not-allowed !important;
+}
+// Field
+// disabled
+
+// enable
+// field
+.e-card .e-card-content {
+  color: rgba(0, 0, 0, 1) !important;
+}
+
+.e-outline.e-float-input.e-valid-input:not(.e-success):not(.e-error):not(.e-warning):not(.e-float-icon-left),
+.e-outline.e-float-input.e-valid-input:hover:not(.e-success):not(.e-error):not(.e-warning):not(.e-float-icon-left),
+.e-outline.e-float-input.e-valid-input.e-control-wrapper:hover:not(.e-success):not(.e-error):not(.e-warning):not(.e-float-icon-left),
+.e-outline.e-float-input.e-valid-input.e-control-wrapper:not(.e-success):not(.e-error):not(.e-warning):not(.e-float-icon-left),
+.e-outline.e-float-input.e-valid-input.e-control-wrapper:hover:not(.e-success):not(.e-error):not(.e-warning):not(.e-float-icon-left):not(.e-disabled),
+.e-outline.e-float-input.e-valid-input.e-control-wrapper:not(.e-success):not(.e-error):not(.e-warning):not(.e-float-icon-left):not(.e-disabled),
+.e-outline.e-float-input.e-input-group.e-valid-input:not(.e-success):not(.e-error):not(.e-warning):not(.e-float-icon-left),
+.e-outline.e-float-input.e-input-group.e-valid-input:hover:not(.e-success):not(.e-error):not(.e-warning):not(.e-float-icon-left),
+.e-outline.e-float-input.e-input-group.e-control-wrapper.e-valid-input:not(.e-success):not(.e-error):not(.e-warning):not(.e-float-icon-left),
+.e-outline.e-float-input.e-input-group.e-control-wrapper.e-valid-input:hover:not(.e-success):not(.e-error):not(.e-warning):not(.e-float-icon-left),
+.e-outline.e-float-input.e-valid-input.e-success:not(.e-error):not(.e-warning):not(.e-float-icon-left),
+.e-outline.e-float-input.e-valid-input.e-success:hover:not(.e-error):not(.e-warning):not(.e-float-icon-left),
+.e-outline.e-float-input.e-input-group.e-valid-input.e-success:not(.e-error):not(.e-warning):not(.e-float-icon-left),
+.e-outline.e-float-input.e-input-group.e-valid-input.e-success:hover:not(.e-error):not(.e-warning):not(.e-float-icon-left),
+.e-outline.e-float-input.e-control-wrapper.e-valid-input.e-success:not(.e-error):not(.e-warning):not(.e-float-icon-left),
+.e-outline.e-float-input.e-control-wrapper.e-valid-input.e-success:hover:not(.e-error):not(.e-warning):not(.e-float-icon-left),
+.e-outline.e-float-input.e-valid-input.e-error:not(.e-success):not(.e-warning):not(.e-float-icon-left),
+.e-outline.e-float-input.e-valid-input.e-error:hover:not(.e-success):not(.e-warning):not(.e-float-icon-left),
+.e-outline.e-float-input.e-input-group.e-valid-input.e-error:not(.e-success):not(.e-warning):not(.e-float-icon-left),
+.e-outline.e-float-input.e-input-group.e-valid-input.e-error:hover:not(.e-success):not(.e-warning):not(.e-float-icon-left),
+.e-outline.e-float-input.e-control-wrapper.e-valid-input.e-error:not(.e-success):not(.e-warning):not(.e-float-icon-left),
+.e-outline.e-float-input.e-control-wrapper.e-valid-input.e-error:hover:not(.e-success):not(.e-warning):not(.e-float-icon-left),
+.e-outline.e-float-input.e-valid-input.e-warning:not(.e-success):not(.e-error):not(.e-float-icon-left),
+.e-outline.e-float-input.e-valid-input.e-warning:hover:not(.e-success):not(.e-error):not(.e-float-icon-left),
+.e-outline.e-float-input.e-input-group.e-valid-input.e-warning:not(.e-success):not(.e-error):not(.e-float-icon-left),
+.e-outline.e-float-input.e-input-group.e-valid-input.e-warning:hover:not(.e-success):not(.e-error):not(.e-float-icon-left),
+.e-outline.e-float-input.e-control-wrapper.e-valid-input.e-warning:not(.e-success):not(.e-error):not(.e-float-icon-left),
+.e-outline.e-float-input.e-control-wrapper.e-valid-input.e-warning:hover:not(.e-success):not(.e-error):not(.e-float-icon-left) {
+  color: rgba(0, 0, 0, 1) !important;
+}
+.e-outline {
+  color: rgba(0, 0, 0, 1) !important;
+}
+// field
+// label
+.mat-form-field-label {
+  color: rgba(0, 0, 0, 1) !important;
+}
+.mat-select-value-text {
+  color: rgba(0, 0, 0, 1) !important;
+}
+// enable
+
+/* custom disabled ejs input/ material input */
+
+.status-wrapper .p-carousel-item {
+  flex: auto !important;
+  max-width: fit-content;
+}
+
+.status-wrapper .p-carousel .p-carousel-indicators .p-carousel-indicator button {
+  width: 1rem;
+  height: 0.5rem;
+  transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
+  border-radius: 0;
+}
+
+.status-wrapper .p-carousel .p-carousel-indicators {
+  padding: 0 !important;
+}

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {
   HttpClient,
   HttpHeaders,
+  HttpParams,
   HttpResponse,
   HttpResponseBase,
 } from '@angular/common/http';
@@ -10,7 +11,10 @@ import { environment } from '../../environments/environment';
 import { AbstractEntityService } from '../shared/base/abstract-entity.service';
 import { createRequestOption } from '../shared/util/request-util';
 import { IPenduduk, Penduduk } from './penduduk.model';
-import { IKartuKeluarga, KartuKeluarga } from './kartukeluarga.model';
+import {
+  IKartuKeluarga,
+  KartuKeluarga,
+} from '../kartu-keluarga/kartukeluarga.model';
 
 @Injectable({
   providedIn: 'root',
@@ -24,6 +28,15 @@ export class PendudukService extends AbstractEntityService<IPenduduk> {
   }
   protected override isNew(entity: IPenduduk): boolean {
     return entity.id === undefined || entity.id === null;
+  }
+
+  public getAll(params: any): Observable<any> {
+    const httpParams = new HttpParams()
+      .set('page', params.page)
+      .set('size', params.size)
+      .set('sort', params.sort);
+
+    return this.http.get<any>(this.resourceUrl, { params: httpParams });
   }
 
   createPenduduk(
@@ -127,5 +140,11 @@ export class PendudukService extends AbstractEntityService<IPenduduk> {
 
   deletePenduduk(id: number): Observable<any> {
     return this.http.delete(`${this.resourceUrl}/${id}`);
+  }
+
+  getPendudukByNoKK(noKK: string): Observable<IPenduduk> {
+    const url = `${this.resourceUrl}/get-penduduk-by-no-kk`;
+    const params = new HttpParams().set('noKK', noKK); // Ensure the parameter is set correctly
+    return this.http.get<IPenduduk>(url, { params });
   }
 }

@@ -1,0 +1,212 @@
+<mat-card class="example-card">
+  <mat-card-header>
+    <mat-card-title>Data Penduduk Pindah</mat-card-title>
+    <!-- <mat-card-subtitle>Dog Breed</mat-card-subtitle> -->
+  </mat-card-header>
+  <mat-card-content>
+    <mat-form-field appearance="outline" class="w-100">
+      <mat-label>Search</mat-label>
+      <input matInput [(ngModel)]="keyword" placeholder="Enter keyword">
+      <button mat-button matSuffix mat-icon-button aria-label="Clear" (click)="onSearch()">
+        <mat-icon>search</mat-icon>
+      </button>
+      <button *ngIf="keyword" mat-button matSuffix mat-icon-button aria-label="Clear"
+        (click)="keyword = ''; onSearch()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+
+
+    <div class="table-responsive">
+
+      <table mat-table [dataSource]="dataSource" class="mat-table-expand mt-3" multiTemplateDataRows>
+        <!-- ... other code ... -->
+        <!-- Position Column -->
+        <ng-container matColumnDef="no">
+          <th mat-header-cell *matHeaderCellDef> No. </th>
+          <td mat-cell *matCellDef="let element; let i = dataIndex" class="grid-index-right">
+            {{ i + 1 + paginator.pageIndex * paginator.pageSize }}.
+          </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="kodePindah">
+          <th mat-header-cell *matHeaderCellDef> Kode Penduduk pindah </th>
+          <td mat-cell *matCellDef="let element"> {{element.kodePindah}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="noSuratPindah">
+          <th mat-header-cell *matHeaderCellDef> No Surat pindah </th>
+          <td mat-cell *matCellDef="let element"> {{element.suratKeteranganPindah.noSuratPindah}} </td>
+        </ng-container>
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="tanggalPindah">
+          <th mat-header-cell *matHeaderCellDef> Tanggal Pindah </th>
+          <td mat-cell *matCellDef="let element"> {{element.tanggalPindah}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="tanggalSuratPindah">
+          <th mat-header-cell *matHeaderCellDef> Tanggal Surat Pindah </th>
+          <td mat-cell *matCellDef="let element"> {{element.suratKeteranganPindah.tanggalSuratPindah}} </td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="alamatPindah">
+          <th mat-header-cell *matHeaderCellDef> Alamat Pindah </th>
+          <td mat-cell *matCellDef="let element"> {{element.alamatPindah}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="keteranganPindah">
+          <th mat-header-cell *matHeaderCellDef> Keterangan Pindah </th>
+          <td mat-cell *matCellDef="let element"> {{element.suratKeteranganPindah.keteranganPindah}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef>Action</th>
+
+          <td mat-cell *matCellDef="let element">
+            <button mat-icon-button (click)="openDialog(element)" (click)="$event.stopPropagation()">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <!-- <a href="javascript:void();" [routerLink]="[element.id]" mat-icon-button (click)="$event.stopPropagation()">
+              <fa-icon icon="pencil-alt"></fa-icon>
+            </a> -->
+            <button mat-icon-button (click)="deletePindah(element.id)" (click)="$event.stopPropagation()">
+              <mat-icon>delete</mat-icon>
+            </button>
+            <!-- <a href="javascript:void();" [routerLink]="['/penduduk-pindah','detail-pindah', element.id]" mat-icon-button
+              (click)="$event.stopPropagation()">
+              <fa-icon icon="user-plus"></fa-icon>
+            </a> -->
+
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="expand">
+          <th mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-icon-button aria-label="expand row"
+              (click)="expandedElement = expandedElement === element ? null : element; $event.stopPropagation()">
+              <mat-icon *ngIf="expandedElement !== element">keyboard_arrow_down</mat-icon>
+              <mat-icon *ngIf="expandedElement === element">keyboard_arrow_up</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="expandedDetail">
+          <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumnsExpand.length">
+            <div class="mat-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+              <div class="p-3 w-100">
+                <mat-card class="w-100 mx-auto">
+                  <mat-card-header class="w-100">
+                    <h6 class="fw-bold black text-uppercase">Detail Penduduk Pindah</h6>
+                  </mat-card-header>
+                  <mat-card-content>
+                    <table mat-table [dataSource]="dataSourceDetailPindah" class="mat-table-expand mt-3"
+                      multiTemplateDataRows>
+                      <ng-container matColumnDef="no">
+                        <th mat-header-cell *matHeaderCellDef width="5%" class="grid-index-right rounding-table-left">No
+                        </th>
+                        <td mat-cell *matCellDef="let element; let i = dataIndex" class="grid-index-right">
+                          {{ i + 1 + paginator.pageIndex * paginator.pageSize }}.
+                        </td>
+                      </ng-container>
+                      <ng-container matColumnDef="kodePindah">
+                        <th mat-header-cell *matHeaderCellDef class="grid-index-left">Kode Pindah</th>
+                        <td mat-cell *matCellDef="let element" class="grid-index-left">
+                          {{ element.kodePindah }}</td>
+                      </ng-container>
+                      <ng-container matColumnDef="noKK">
+                        <th mat-header-cell *matHeaderCellDef class="grid-index-right">No kartu Keluarga</th>
+                        <td mat-cell *matCellDef="let element" class="grid-index-right">
+                          {{ element.noKK }}
+                        </td>
+                      </ng-container>
+                      <ng-container matColumnDef="noKtp">
+                        <th mat-header-cell *matHeaderCellDef class="grid-index-left">No KTP</th>
+                        <td mat-cell *matCellDef="let element" class="grid-index-left">
+                          {{ element.noKTP }}
+                        </td>
+                      </ng-container>
+                      <ng-container matColumnDef="namaLengkap">
+                        <th mat-header-cell *matHeaderCellDef class="grid-index-left">Nama Lengkap</th>
+                        <td mat-cell *matCellDef="let element" class="grid-index-left">
+                          {{ element.nama }}
+                        </td>
+                      </ng-container>
+                      <ng-container matColumnDef="jenisKelamin">
+                        <th mat-header-cell *matHeaderCellDef class="grid-index-left">Jenis Kelamin</th>
+                        <td mat-cell *matCellDef="let element" class="grid-index-left">
+                          {{ element.jenisKelamin }}
+                        </td>
+                      </ng-container>
+                      <ng-container matColumnDef="ttl">
+                        <th mat-header-cell *matHeaderCellDef class="grid-index-left">Tempat, Tanggal Lahir</th>
+                        <td mat-cell *matCellDef="let element" class="grid-index-left">
+                          {{ element.tempatLahir }} / {{ element.tanggalLahir | date: 'dd-MM-yyyy' }}
+                        </td>
+                      </ng-container>
+                      <ng-container matColumnDef="agama">
+                        <th mat-header-cell *matHeaderCellDef class="grid-index-left">Agama</th>
+                        <td mat-cell *matCellDef="let element" class="grid-index-left">
+                          {{ element.agama }}
+                        </td>
+                      </ng-container>
+                      <ng-container matColumnDef="foto">
+                        <th mat-header-cell *matHeaderCellDef> Foto </th>
+                        <td mat-cell *matCellDef="let element">
+                          <img [src]="element.fotoUrl" alt="Foto" style="width: 50px;">
+                        </td>
+                      </ng-container>
+                      <ng-container matColumnDef="action">
+
+
+                        <th mat-header-cell *matHeaderCellDef class="grid-index-left rounding-table-right">
+                          Action</th>
+                        <td mat-cell *matCellDef="let element" class="grid-index-left text-lowercase">
+                          <button mat-icon-button (click)="onDeleteDetailPindah(element.id)">
+                            <mat-icon>delete</mat-icon>
+                          </button>
+                        </td>
+                      </ng-container>
+                      <tr class="mat-row" *matNoDataRow>
+                        <td class="mat-cell" [attr.colspan]="displayColumns.length">No records found.</td>
+                      </tr>
+                      <tr mat-header-row *matHeaderRowDef="displayColumns"></tr>
+                      <tr mat-row *matRowDef="let row; columns: displayColumns"></tr>
+                    </table>
+                    <div class="e-card-actions">
+                      <div class="d-flex justify-content-center mb-2 mt-2">
+                        <button mat-raised-button (click)="openDialogPricing(element, 'add')" class="button-styling">
+                          ADD NEW DETAIL PINDAH
+                        </button>
+                      </div>
+                    </div>
+                  </mat-card-content>
+                </mat-card>
+              </div>
+            </div>
+          </td>
+        </ng-container>
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" [attr.colspan]="displayedColumnsExpand.length">No records found.</td>
+        </tr>
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsExpand"></tr>
+        <tr mat-row *matRowDef="let element; columns: displayedColumnsExpand"
+          [class.mat-expanded-row]="expandedElement === element" class="mat-element-row"
+          (click)="expandData(element); expandedElement = expandedElement === element ? null : element"></tr>
+        <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="mat-detail-row"></tr>
+      </table>
+    </div>
+    <mat-card *ngIf="loading" id="material-loading-bar">
+      <mat-progress-spinner color="warn" mode="indeterminate"> </mat-progress-spinner>
+    </mat-card>
+    <mat-paginator showFirstLastButtons [pageSizeOptions]="pageSizeOptions" [pageSize]="itemsPerPage"
+      [length]="totalItems" (page)="loadDataLazy($event)">
+    </mat-paginator>
+  </mat-card-content>
+  <div class="e-card-actions">
+    <div class="d-flex justify-content-center my-2">
+      <button mat-raised-button (click)="openDialog()" class="button-styling">ADD NEW PENDUDUK PINDAH</button>
+    </div>
+  </div>
+</mat-card>

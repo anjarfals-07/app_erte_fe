@@ -15,7 +15,7 @@ import { PendudukUpdateComponent } from './penduduk-update/penduduk-update.compo
 import { HttpClientModule } from '@angular/common/http';
 @NgModule({
   declarations: [
-    PendudukComponent,
+    // PendudukComponent,
     PendudukCreateComponent,
     PendudukUpdateComponent,
   ],

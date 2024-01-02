@@ -1,4 +1,7 @@
-import { IKartuKeluarga, KartuKeluarga } from './kartukeluarga.model';
+import {
+  IKartuKeluarga,
+  KartuKeluarga,
+} from '../kartu-keluarga/kartukeluarga.model';
 
 export interface IPenduduk {
   id?: number;
@@ -23,6 +26,7 @@ export interface IPenduduk {
   kodePos?: string;
   foto?: File | null;
   fotoUrl?: string;
+  statusPenduduk?: string;
 }
 
 export class Penduduk implements IPenduduk {
@@ -48,7 +52,8 @@ export class Penduduk implements IPenduduk {
     public kota?: string,
     public kodePos?: string,
     public foto?: File | null,
-    public fotoUrl?: string
+    public fotoUrl?: string,
+    public statusPenduduk?: string
   ) {
     this.kartuKeluarga = new KartuKeluarga();
   }

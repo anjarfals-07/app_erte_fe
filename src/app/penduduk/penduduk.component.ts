@@ -9,7 +9,7 @@ import {
   HttpResponse,
 } from '@angular/common/http';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { map } from 'rxjs';
 import {
   animate,
@@ -38,12 +38,8 @@ import { MatDialog } from '@angular/material/dialog';
     ]),
   ],
 })
-export class PendudukComponent
-  extends AbstractEntityMaterialComponent<IPenduduk>
-  implements OnInit
-{
-  // public override items: any = new MatTableDataSource<IPenduduk>([]);
-  @ViewChild(MatPaginator) override paginator!: MatPaginator;
+export class PendudukComponent implements OnInit {
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
   public displayedColumns: string[] = [
     'no',
@@ -53,13 +49,19 @@ export class PendudukComponent
     'ttl',
     'statusKeluarga',
     'statusPerkawinan',
+    'statusPenduduk',
     'foto',
     'action',
   ];
 
   public displayedColumnsExpand = [...this.displayedColumns, 'expand'];
+  public pageSizeOptions = [5, 10, 25];
+  public totalItems = 0;
+  public page = 0;
+  public itemsPerPage = 10;
 
-  // public data!: IPenduduk[]; // This should be an array of IPenduduk objects.
+  public items = new MatTableDataSource<IPenduduk>();
+  public loading = false;
 
   constructor(
     protected _snackbar: MatSnackBar,
@@ -67,33 +69,25 @@ export class PendudukComponent
     private route: Router,
     private actvatedRoutei: ActivatedRoute,
     protected dialog: MatDialog
-  ) {
-    super(_snackbar, pendudukService);
-    this.page = 0;
-    this.itemsPerPage = 10;
-    this.predicate = 'id';
-    this.entityKeyName = 'id';
-    this.items = new MatTableDataSource<IPenduduk>([]);
-  }
+  ) {}
 
   ngOnInit() {
     this.loadAll();
   }
 
   private loadAll(): void {
-    this.loading = true; // Set loading to true before making the API call
-    this.pendudukService
-      .query({
-        page: this.page,
-        size: this.itemsPerPage,
-        sort: this.sortData(),
-      })
-      .subscribe({
-        next: (res: HttpResponse<IPenduduk[]>) => {
-          this.initDataForMatTable(res, res.headers);
-        },
-        error: (res: HttpErrorResponse) => this.onError(res.message),
-      });
+    this.loading = true;
+    const params = {
+      page: this.page,
+      size: this.itemsPerPage,
+      sort: 'asc',
+    };
+
+    this.pendudukService.getAll(params).subscribe((data) => {
+      this.items = new MatTableDataSource<IPenduduk>(data);
+      this.items.paginator = this.paginator;
+      this.loading = false;
+    });
   }
 
   // Delete Confirmation
@@ -115,8 +109,10 @@ export class PendudukComponent
     });
   }
 
-  protected override postLoadDataLazy(): void {
-    this.loadAll();
+  public loadDataLazy(event: PageEvent): void {
+    console.log('loadDataLazy triggered');
+    this.page = event.pageIndex;
+    this.itemsPerPage = event.pageSize;
   }
 
   previousState(): void {

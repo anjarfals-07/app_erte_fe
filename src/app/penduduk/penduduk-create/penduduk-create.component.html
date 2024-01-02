@@ -168,6 +168,17 @@
               </mat-form-field>
             </div>
             <div class="form-group">
+              <mat-form-field class="w-100" appearance="outline">
+                <mat-label>Status Penduduk</mat-label>
+                <mat-select [(ngModel)]="penduduk.statusPenduduk">
+                  <mat-option value="">- Please Select -</mat-option>
+                  <mat-option *ngFor="let item of listOfValue.statusPenduduk" [value]="item">
+                    {{ item }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="form-group">
               <input type="file" (change)="onFileSelected($event)" />
             </div>
 

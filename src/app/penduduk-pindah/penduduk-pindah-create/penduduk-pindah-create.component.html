@@ -1,0 +1,55 @@
+<h2 mat-dialog-title>ADD / Edit Penduduk Pindah</h2>
+<mat-dialog-content>
+  <div class="row">
+    <div class="col-12">
+      <section class="mt-2">
+        <mat-form-field class="w-100" appearance="outline">
+          <mat-label>Kode Pindah</mat-label>
+          <input matInput type="text" required [(ngModel)]="pendudukPindah.kodePindah" disabled />
+        </mat-form-field>
+      </section>
+      <section class="mt-2">
+        <mat-form-field class="w-100" appearance="outline">
+          <mat-label>Tanggal Pindah</mat-label>
+          <input matInput [matDatepicker]="pickerFromDate" [(ngModel)]="pendudukPindah.tanggalPindah" />
+          <mat-datepicker-toggle matSuffix [for]="pickerFromDate"></mat-datepicker-toggle>
+          <mat-datepicker #pickerFromDate></mat-datepicker>
+        </mat-form-field>
+      </section>
+      <section class="mt-2">
+        <mat-form-field class="w-100" appearance="outline">
+          <mat-label>Alamat Pindah</mat-label>
+          <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize"
+            [(ngModel)]="pendudukPindah.alamatPindah"></textarea>
+        </mat-form-field>
+      </section>
+      <section class="mt-2">
+        <mat-form-field class="w-100" appearance="outline">
+          <mat-label>No Surat pindah</mat-label>
+          <input matInput type="text" required [(ngModel)]="pendudukPindah.suratKeteranganPindah.noSuratPindah"
+            disabled />
+        </mat-form-field>
+      </section>
+      <section class="mt-2">
+        <mat-form-field class="w-100" appearance="outline">
+          <mat-label>Tanggal Surat Pindah</mat-label>
+          <input matInput [matDatepicker]="pickerSuratDate"
+            [(ngModel)]="pendudukPindah.suratKeteranganPindah.tanggalSuratPindah" />
+          <mat-datepicker-toggle matSuffix [for]="pickerSuratDate"></mat-datepicker-toggle>
+          <mat-datepicker #pickerSuratDate></mat-datepicker>
+        </mat-form-field>
+      </section>
+      <section class="mt-2">
+        <mat-form-field class="w-100" appearance="outline">
+          <mat-label>Keterangan Pindah</mat-label>
+          <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize"
+            [(ngModel)]="pendudukPindah.suratKeteranganPindah.keteranganPindah"></textarea>
+        </mat-form-field>
+      </section>
+    </div>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+  <button mat-raised-button class="confirm-button-no" (click)="openCancelDialog()">CLOSE</button>
+  <button mat-raised-button class="confirm-button-yes" (click)="save()">SAVE</button>
+</mat-dialog-actions>

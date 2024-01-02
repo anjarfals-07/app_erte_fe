@@ -7,15 +7,25 @@ const routes: Routes = [
     path: '',
     component: HomeComponent,
   },
-  // {
-  //   path: 'penduduk',
-  //   component: PendudukComponent,
-  // },
 
   {
     path: 'penduduk',
     loadChildren: () =>
       import('./penduduk/penduduk.module').then((m) => m.PendudukModule),
+  },
+  {
+    path: 'penduduk-pindah',
+    loadChildren: () =>
+      import('./penduduk-pindah/penduduk-pindah.module').then(
+        (m) => m.PendudukPindahModule
+      ),
+  },
+  {
+    path: 'penduduk-meninggal',
+    loadChildren: () =>
+      import('./penduduk-meninggal/penduduk-meninggal.module').then(
+        (m) => m.PendudukMeninggalModule
+      ),
   },
 ];
 

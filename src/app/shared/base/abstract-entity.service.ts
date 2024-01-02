@@ -158,6 +158,7 @@ export class AbstractEntityService<T> {
   delete(id: any): Observable<HttpResponse<any>> {
     return this.http.delete<any>(`${this.resourceUrl}/${id}`, {
       observe: 'response',
+      responseType: 'text' as 'json',
     });
   }
 

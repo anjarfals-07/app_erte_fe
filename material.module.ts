@@ -17,11 +17,14 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MessagesModule } from 'primeng/messages';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { MatNativeDateModule } from '@angular/material/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { CommonModule, DatePipe } from '@angular/common';
+import { MessagesModule } from 'primeng/messages';
+import { MessageModule } from 'primeng/message';
+import { ToastModule } from 'primeng/toast';
 
 @NgModule({
   imports: [
@@ -34,7 +37,6 @@ import { MatExpansionModule } from '@angular/material/expansion';
     MatCardModule,
     MatDatepickerModule,
     MatTableModule,
-    MatPaginatorModule,
     MatSnackBarModule,
     MatProgressSpinnerModule,
     FontAwesomeModule,
@@ -44,11 +46,12 @@ import { MatExpansionModule } from '@angular/material/expansion';
     MatSelectModule,
     FormsModule,
     ReactiveFormsModule,
-    MessagesModule,
     MatMomentDateModule,
     MatNativeDateModule,
     NgbModule,
     MatExpansionModule,
+    MessagesModule,
+    MessageModule,
   ],
   exports: [
     MatSidenavModule,
@@ -70,11 +73,19 @@ import { MatExpansionModule } from '@angular/material/expansion';
     MatSelectModule,
     FormsModule,
     ReactiveFormsModule,
-    MessagesModule,
     MatMomentDateModule,
     MatNativeDateModule,
     NgbModule,
     MatExpansionModule,
+    MessagesModule,
+    MatInputModule,
+    MatFormFieldModule,
+    FormsModule,
+    MatExpansionModule,
+    ReactiveFormsModule,
+    CommonModule,
+    MessageModule,
+    ToastModule,
   ],
 })
 export class MaterialModule {}
