@@ -43,4 +43,17 @@ mat-list-item.active {
   margin-bottom: 10px;
 }
 
+mat-card-title {
+  font-family: "Poppins", sans-serif;
+  font-size: 18px;
+  color: #008881;
+  font-style: normal;
+  font-weight: 600;
+}
+mat-card-header {
+  justify-content: center;
+}
+::ng-deep .mat-menu-content {
+  padding: 0px !important;
+}
 /* Add more styles as needed */

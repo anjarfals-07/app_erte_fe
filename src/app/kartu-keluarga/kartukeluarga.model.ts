@@ -1,3 +1,5 @@
+import { IPenduduk } from '../penduduk/penduduk.model';
+
 export interface IKartuKeluarga {
   id?: number;
   noKK?: string; // Provide a default value

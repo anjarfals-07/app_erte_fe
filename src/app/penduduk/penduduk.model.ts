@@ -17,6 +17,7 @@ export interface IPenduduk {
   pendidikan?: string;
   pekerjaan?: string;
   telepon?: string;
+  email?: string;
   alamat?: string;
   rt?: string;
   rw?: string;
@@ -27,6 +28,7 @@ export interface IPenduduk {
   foto?: File | null;
   fotoUrl?: string;
   statusPenduduk?: string;
+  newStatusPenduduk?: string;
 }
 
 export class Penduduk implements IPenduduk {
@@ -44,6 +46,7 @@ export class Penduduk implements IPenduduk {
     public pendidikan?: string,
     public pekerjaan?: string,
     public telepon?: string,
+    public email?: string,
     public alamat?: string,
     public rt?: string,
     public rw?: string,
@@ -53,7 +56,8 @@ export class Penduduk implements IPenduduk {
     public kodePos?: string,
     public foto?: File | null,
     public fotoUrl?: string,
-    public statusPenduduk?: string
+    public statusPenduduk?: string,
+    public newStatusPenduduk?: string
   ) {
     this.kartuKeluarga = new KartuKeluarga();
   }

@@ -10,8 +10,6 @@ import { Observable, map, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AbstractEntityService } from 'src/app/shared/base/abstract-entity.service';
 import { IDetailPendudukPindah } from './detail-penduduk-pindah.model';
-import { IPenduduk } from 'src/app/penduduk/penduduk.model';
-import { createRequestOption } from 'src/app/shared/util/request-util';
 
 @Injectable({
   providedIn: 'root',

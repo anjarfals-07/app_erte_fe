@@ -7,7 +7,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { IPenduduk } from '../penduduk/penduduk.model';
-import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { PendudukPindahCreateComponent } from './penduduk-pindah-create/penduduk-pindah-create.component';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import {
@@ -24,6 +23,7 @@ import {
 import { DetailPendudukPindahComponent } from './detail-penduduk-pindah/detail-penduduk-pindah.component';
 import { DetailPendudukPindahService } from './detail-penduduk-pindah/detail-penduduk-pindah.service';
 import { MessageService } from 'primeng/api';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-penduduk-pindah',
@@ -112,9 +112,7 @@ export class PendudukPindahComponent implements OnInit {
     };
 
     this.pendudukPindahService.getAll(params).subscribe((data) => {
-      this.dataSource = new MatTableDataSource<IPendudukPindah>(
-        data.pendudukPindah
-      );
+      this.dataSource = new MatTableDataSource<IPendudukPindah>(data);
       this.dataSource.paginator = this.paginator;
     });
   }
@@ -136,9 +134,7 @@ export class PendudukPindahComponent implements OnInit {
         params.sort
       )
       .subscribe((data) => {
-        this.dataSource = new MatTableDataSource<IPendudukPindah>(
-          data.pendudukPindah
-        );
+        this.dataSource = new MatTableDataSource<IPendudukPindah>(data);
         this.dataSource.paginator = this.paginator;
         this.loading = false;
       });
@@ -235,7 +231,7 @@ export class PendudukPindahComponent implements OnInit {
     console.log('Event stopped');
   }
 
-  openDialogPricing(element: IDetailPendudukPindah = null): void {
+  openDialogDetailPindah(element: IDetailPendudukPindah = null): void {
     let predicate: IDetailPendudukPindah;
     predicate = new DetailPendudukPindah();
 

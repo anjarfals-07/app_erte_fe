@@ -769,7 +769,8 @@ mat-cell,
 mat-card-title {
   font-family: "Poppins", sans-serif;
   font-size: 18px;
-  color: #008881;
+  /* background-color: rgb(35, 151, 223) !important; */
+  color: #236edf;
   font-style: normal;
   font-weight: 600;
 }
@@ -781,4 +782,132 @@ mat-card-title {
 .bg-personal {
   text-align: center;
   color: #000000;
+}
+
+.button-styling {
+  background-color: rgb(37, 112, 224) !important;
+  color: #efefef;
+}
+
+/* =================================== PROFILE CARD ============================== */
+/* penduduk.component.css */
+
+.header-section {
+  position: relative; /* Set the position to relative for absolute positioning */
+  text-align: center;
+  margin-top: 20px;
+  background-color: #007bff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease-in-out;
+}
+
+.edit-button {
+  position: absolute;
+  top: 10px; /* Adjust the top position as needed */
+  right: 10px; /* Adjust the right position as needed */
+}
+
+.profile-image {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 5px solid #fff;
+  transition: transform 0.3s ease-in-out, border-color 0.3s ease-in-out;
+}
+
+.personal-info-card,
+.contact-info-card,
+.address-details-card {
+  width: 100%;
+  margin: auto;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  text-align: center;
+}
+
+.mt-3 {
+  margin-top: 20px;
+}
+
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.float-start {
+  float: left;
+}
+
+.float-end {
+  float: right;
+}
+
+.fw-bolder {
+  font-weight: bold;
+}
+
+/* Add a subtle zoom effect on hover for cards */
+.personal-info-card:hover,
+.contact-info-card:hover,
+.address-details-card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Add hover effect for header-section and profile-image */
+.header-section:hover {
+  background-color: #0056b3;
+}
+
+.profile-image:hover {
+  transform: scale(1.1);
+  border-color: #ff9800; /* Orange border color on hover */
+}
+
+/* Adjust the color and size of the edit icon */
+button[mat-icon-button] mat-icon {
+  color: #fff; /* White color for the icon */
+  font-size: 16px; /* Adjust the font size as needed */
+  transition: color 0.3s ease-in-out, transform 0.3s ease-in-out;
+  margin-top: 2px; /* Adjust the margin-top to move the icon downward */
+}
+
+/* Add a subtle scale effect on hover for the edit icon */
+button[mat-icon-button]:hover mat-icon {
+  transform: scale(1.1);
+}
+
+/* Responsive styles */
+@media screen and (max-width: 600px) {
+  .header-section {
+    padding: 20px 10px;
+  }
+
+  .profile-image {
+    margin-bottom: 20px;
+  }
+
+  .personal-info-card,
+  .contact-info-card,
+  .address-details-card {
+    margin-bottom: 20px;
+  }
+
+  /* Adjust the font size and margin-top of the edit icon for smaller screens */
+  button[mat-icon-button] mat-icon {
+    font-size: 14px;
+    margin-top: 1px;
+  }
+}
+
+.mat-card-header,
+.mat-card-title {
+  text-align: center;
 }

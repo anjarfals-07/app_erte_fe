@@ -770,7 +770,7 @@ mat-cell,
 mat-card-title {
   font-family: "Poppins", sans-serif;
   font-size: 18px;
-  color: #008881;
+  color: #236edf;
   font-style: normal;
   font-weight: 600;
 }
@@ -814,10 +814,14 @@ mat-card-title {
 
 /* Add this style to your component's CSS file */
 
-/* .button-styling {
-  background-color: #007bff;
+.button-styling {
+  background-color: #236edf;
   color: #ffffff;
-} */
+}
+
+.mat-dialog-title {
+  color: #236edf;
+}
 
 #material-loading-bar {
   position: absolute;

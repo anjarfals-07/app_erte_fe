@@ -1,1 +1,139 @@
-<p>kartu-keluarga works!</p>
+<mat-card class="example-card">
+  <mat-card-header>
+    <mat-card-title>Data Kartu Keluarga</mat-card-title>
+    <!-- <mat-card-subtitle>Dog Breed</mat-card-subtitle> -->
+  </mat-card-header>
+  <mat-card-content>
+    <!-- <mat-form-field appearance="outline" class="w-100">
+      <mat-label>Search</mat-label>
+      <input matInput [(ngModel)]="keyword" placeholder="Enter keyword">
+      <button mat-button matSuffix mat-icon-button aria-label="Clear" (click)="onSearch()">
+        <mat-icon>search</mat-icon>
+      </button>
+      <button *ngIf="keyword" mat-button matSuffix mat-icon-button aria-label="Clear"
+        (click)="keyword = ''; onSearch()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field> -->
+
+
+    <div class="table-responsive">
+
+      <table mat-table [dataSource]="dataSource" class="mat-table-expand mt-3" multiTemplateDataRows>
+        <!-- ... other code ... -->
+        <!-- Position Column -->
+        <ng-container matColumnDef="no">
+          <th mat-header-cell *matHeaderCellDef> No. </th>
+          <td mat-cell *matCellDef="let element; let i = dataIndex" class="grid-index-right">
+            {{ i + 1 + paginator.pageIndex * paginator.pageSize }}.
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="noKK">
+          <th mat-header-cell *matHeaderCellDef> No Kartu Keluarga </th>
+          <td mat-cell *matCellDef="let element"> {{element.noKK}} </td>
+        </ng-container>
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="namaKepalaKeluarga">
+          <th mat-header-cell *matHeaderCellDef> Nama Kepala Keluarga </th>
+          <td mat-cell *matCellDef="let element"> {{element.namaKepalaKeluarga}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="expand">
+          <th mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-icon-button aria-label="expand row"
+              (click)="expandedElement = expandedElement === element ? null : element; $event.stopPropagation()">
+              <mat-icon *ngIf="expandedElement !== element">keyboard_arrow_down</mat-icon>
+              <mat-icon *ngIf="expandedElement === element">keyboard_arrow_up</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="expandedDetail">
+          <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumnsExpand.length">
+            <div class="mat-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+              <div class="p-3 w-100">
+                <mat-card class="w-100 mx-auto">
+                  <mat-card-header class="w-100">
+                    <mat-card-subtitle>Data Penduduk</mat-card-subtitle>
+                  </mat-card-header>
+                  <mat-card-content>
+                    <table mat-table [dataSource]="element.pendudukList" class="mat-table-expand mt-3"
+                      multiTemplateDataRows>
+                      <ng-container matColumnDef="no">
+                        <th mat-header-cell *matHeaderCellDef width="5%" class="grid-index-right rounding-table-left">No
+                        </th>
+                        <td mat-cell *matCellDef="let element; let i = dataIndex" class="grid-index-right">
+                          {{ i + 1 + paginator.pageIndex * paginator.pageSize }}.
+                        </td>
+                      </ng-container>
+                      <ng-container matColumnDef="noKtp">
+                        <th mat-header-cell *matHeaderCellDef class="grid-index-left">No KTP</th>
+                        <td mat-cell *matCellDef="let element" class="grid-index-left">
+                          {{ element.noKtp }}
+                        </td>
+                      </ng-container>
+                      <ng-container matColumnDef="namaLengkap">
+                        <th mat-header-cell *matHeaderCellDef class="grid-index-left">Nama Lengkap</th>
+                        <td mat-cell *matCellDef="let element" class="grid-index-left">
+                          {{ element.namaLengkap }}
+                        </td>
+                      </ng-container>
+                      <ng-container matColumnDef="jenisKelamin">
+                        <th mat-header-cell *matHeaderCellDef class="grid-index-left">Jenis Kelamin</th>
+                        <td mat-cell *matCellDef="let element" class="grid-index-left">
+                          {{ element.jenisKelamin }}
+                        </td>
+                      </ng-container>
+                      <ng-container matColumnDef="ttl">
+                        <th mat-header-cell *matHeaderCellDef class="grid-index-left">Tempat, Tanggal Lahir</th>
+                        <td mat-cell *matCellDef="let element" class="grid-index-left">
+                          {{ element.tempatLahir }} / {{ element.tanggalLahir | date: 'dd-MM-yyyy' }}
+                        </td>
+                      </ng-container>
+                      <ng-container matColumnDef="agama">
+                        <th mat-header-cell *matHeaderCellDef class="grid-index-left">Agama</th>
+                        <td mat-cell *matCellDef="let element" class="grid-index-left">
+                          {{ element.agama }}
+                        </td>
+                      </ng-container>
+                      <ng-container matColumnDef="foto">
+                        <th mat-header-cell *matHeaderCellDef> Foto </th>
+                        <td mat-cell *matCellDef="let element">
+                          <img [src]="element.fotoUrl" alt="Foto" style="width: 50px;">
+                        </td>
+                      </ng-container>
+
+                      <tr class="mat-row" *matNoDataRow>
+                        <td class="mat-cell" [attr.colspan]="displayColumns.length">No records found.</td>
+                      </tr>
+                      <tr mat-header-row *matHeaderRowDef="displayColumns"></tr>
+                      <tr mat-row *matRowDef="let row; columns: displayColumns"></tr>
+                    </table>
+
+                  </mat-card-content>
+                </mat-card>
+              </div>
+            </div>
+          </td>
+        </ng-container>
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" [attr.colspan]="displayedColumnsExpand.length">No records found.</td>
+        </tr>
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsExpand"></tr>
+        <tr mat-row *matRowDef="let element; columns: displayedColumnsExpand"
+          [class.mat-expanded-row]="expandedElement === element" class="mat-element-row"
+          (click)="expandedElement = expandedElement === element ? null : element"></tr>
+        <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="mat-detail-row"></tr>
+      </table>
+    </div>
+    <mat-card *ngIf="loading" id="material-loading-bar">
+      <mat-progress-spinner color="warn" mode="indeterminate"> </mat-progress-spinner>
+    </mat-card>
+    <mat-paginator showFirstLastButtons [pageSizeOptions]="pageSizeOptions" [pageSize]="itemsPerPage"
+      [length]="totalItems" (page)="loadDataLazy($event)">
+    </mat-paginator>
+  </mat-card-content>
+
+</mat-card>

@@ -20,8 +20,10 @@ import {
 } from '@angular/animations';
 import { IPenduduk } from './penduduk.model';
 import * as lodash from 'lodash';
-import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
+import { AuthService } from '../login/auth.service';
+import { Account } from '../account/account.model';
 
 @Component({
   selector: 'app-penduduk',
@@ -62,17 +64,36 @@ export class PendudukComponent implements OnInit {
 
   public items = new MatTableDataSource<IPenduduk>();
   public loading = false;
+  account: Account;
+  public pendudukData: IPenduduk;
 
   constructor(
     protected _snackbar: MatSnackBar,
     protected pendudukService: PendudukService,
     private route: Router,
     private actvatedRoutei: ActivatedRoute,
-    protected dialog: MatDialog
-  ) {}
+    protected dialog: MatDialog,
+    protected authService: AuthService
+  ) {
+    this.authService.loggedInUser$.subscribe((account) => {
+      console.log('account', account);
+      this.account = account;
+      // Check if user is null (not logged in)
+      if (!account) {
+        // Redirect to login page
+        this.route.navigate(['/login']);
+      }
+    });
+  }
 
   ngOnInit() {
-    this.loadAll();
+    if (this.account.role === 'ROLE_USER') {
+      // For ROLE_USER, load detailed data if the account has associated pendudukId
+      this.loadPendudukData();
+    } else {
+      // For other roles, load the list of penduduk
+      this.loadAll();
+    }
   }
 
   private loadAll(): void {
@@ -121,5 +142,51 @@ export class PendudukComponent implements OnInit {
   stopPropagation(event: Event): void {
     event.stopPropagation();
     console.log('Event stopped');
+  }
+
+  public keyword: string;
+
+  onSearch(): void {
+    this.loading = true;
+    const params = {
+      keyword: this.keyword,
+      page: this.page,
+      size: this.itemsPerPage,
+      sort: 'id,asc', // Specify the default sorting property and direction
+    };
+
+    this.pendudukService
+      .searchPenduduk(params.keyword, params.page, params.size, params.sort)
+      .subscribe((data) => {
+        this.items = new MatTableDataSource<IPenduduk>(data);
+        this.items.paginator = this.paginator;
+        this.loading = false;
+      });
+  }
+
+  // Function to load detailed penduduk data for ROLE_USER
+  private loadPendudukData(): void {
+    const pendudukId = this.account.pendudukId;
+    console.log('pendudukId', pendudukId);
+
+    if (pendudukId) {
+      this.pendudukService.getById(pendudukId).subscribe(
+        (data) => {
+          this.pendudukData = data;
+        },
+        (error) => {
+          console.error('Error loading penduduk data:', error);
+        }
+      );
+    }
+  }
+
+  navigateToEditUser(): void {
+    if (this.account && this.account.role === 'ROLE_USER') {
+      // Jika ROLE_USER, redirect ke halaman edit dengan id penduduk
+      this.route.navigate(['/penduduk/', this.account.pendudukId]);
+    } else {
+      // Handle untuk role lain jika dibutuhkan
+    }
   }
 }

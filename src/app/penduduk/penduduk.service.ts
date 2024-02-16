@@ -6,15 +6,11 @@ import {
   HttpResponse,
   HttpResponseBase,
 } from '@angular/common/http';
-import { Observable, map, tap } from 'rxjs';
-import { environment } from '../../environments/environment';
-import { AbstractEntityService } from '../shared/base/abstract-entity.service';
-import { createRequestOption } from '../shared/util/request-util';
+import { BehaviorSubject, Observable, map, tap } from 'rxjs';
 import { IPenduduk, Penduduk } from './penduduk.model';
-import {
-  IKartuKeluarga,
-  KartuKeluarga,
-} from '../kartu-keluarga/kartukeluarga.model';
+import { environment } from 'src/environments/environment';
+import { AbstractEntityService } from 'src/app/shared/base/abstract-entity.service';
+import { createRequestOption } from 'src/app/shared/util/request-util';
 
 @Injectable({
   providedIn: 'root',
@@ -35,8 +31,15 @@ export class PendudukService extends AbstractEntityService<IPenduduk> {
       .set('page', params.page)
       .set('size', params.size)
       .set('sort', params.sort);
-
-    return this.http.get<any>(this.resourceUrl, { params: httpParams });
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    });
+    console.log('headers', headers);
+    return this.http.get<any>(this.resourceUrl, {
+      params: httpParams,
+      headers: headers,
+    });
   }
 
   createPenduduk(
@@ -77,32 +80,6 @@ export class PendudukService extends AbstractEntityService<IPenduduk> {
   getById(id: number): Observable<IPenduduk> {
     return this.http.get<IPenduduk>(`${this.resourceUrl}/${id}`);
   }
-
-  // updatePenduduk(
-  //   id: number,
-  //   entity: IPenduduk
-  // ): Observable<HttpResponse<IPenduduk>> {
-  //   const formData: FormData = new FormData();
-
-  //   for (const [key, value] of Object.entries(entity)) {
-  //     if (value !== undefined && value !== null) {
-  //       if (key === 'foto' && value instanceof File) {
-  //           formData.append('foto', value, value.name);
-  //         } else if (key === 'kartuKeluarga') {
-  //         for (const [subKey, subValue] of Object.entries(value)) {
-  //           formData.append(`kartuKeluarga.${subKey}`, subValue as string);
-  //         }
-  //       } else {
-  //         formData.append(key, value);
-  //       }
-  //     }
-  //   }
-
-  //   return this.http.put<IPenduduk>(`${this.resourceUrl}/${id}`, formData, {
-  //     observe: 'response',
-  //   });
-  //   //   .pipe(tap((response) => console.log('Response from server:', response)));
-  // }
 
   updatePenduduk(
     id: number,
@@ -146,5 +123,31 @@ export class PendudukService extends AbstractEntityService<IPenduduk> {
     const url = `${this.resourceUrl}/get-penduduk-by-no-kk`;
     const params = new HttpParams().set('noKK', noKK); // Ensure the parameter is set correctly
     return this.http.get<IPenduduk>(url, { params });
+  }
+
+  public searchPenduduk(
+    keyword: string,
+    page: number,
+    size: number,
+    sort: string
+  ): Observable<any> {
+    const params = new HttpParams()
+      .set('keyword', keyword)
+      .set('page', page.toString())
+      .set('size', size.toString())
+      .set('sort', sort);
+
+    return this.http.get<any>(`${this.apiUrl}/search`, { params });
+  }
+  getPendudukByNoKtp(noKtp: string): Observable<IPenduduk[]> {
+    const url = `${this.apiUrl}/get-penduduk-by-noktp`;
+    const params = { noKtp };
+
+    return this.http.get<IPenduduk[]>(url, { params });
+  }
+
+  checkNoKtpAvailability(noKtp: string): Observable<boolean> {
+    const url = `${this.apiUrl}/check-ktp/${noKtp}`;
+    return this.http.get<boolean>(url);
   }
 }

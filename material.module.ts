@@ -25,6 +25,9 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { MessagesModule } from 'primeng/messages';
 import { MessageModule } from 'primeng/message';
 import { ToastModule } from 'primeng/toast';
+import { CardModule } from 'primeng/card';
+
+import { PanelModule } from 'primeng/panel';
 
 @NgModule({
   imports: [
@@ -52,6 +55,9 @@ import { ToastModule } from 'primeng/toast';
     MatExpansionModule,
     MessagesModule,
     MessageModule,
+
+    CardModule,
+    PanelModule,
   ],
   exports: [
     MatSidenavModule,
@@ -86,6 +92,9 @@ import { ToastModule } from 'primeng/toast';
     CommonModule,
     MessageModule,
     ToastModule,
+
+    CardModule,
+    PanelModule,
   ],
 })
 export class MaterialModule {}

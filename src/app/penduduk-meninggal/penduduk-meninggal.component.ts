@@ -105,7 +105,7 @@ export class PendudukMeninggalComponent implements OnInit {
   }
 
   // Dialog Add Data
-  public openDialog(element: IPendudukMeninggal = null): void {
+  public openDialog(element: IPendudukMeninggal = null, mode: string): void {
     let predicate: IPendudukMeninggal;
     predicate = new PendudukMeninggal();
 
@@ -117,6 +117,7 @@ export class PendudukMeninggalComponent implements OnInit {
       width: '100%',
       data: {
         pendudukMeninggal: predicate,
+        mode,
       },
     });
     dialogRef.afterClosed().subscribe((res: IPendudukMeninggal) => {
@@ -126,7 +127,7 @@ export class PendudukMeninggalComponent implements OnInit {
     });
   }
 
-  public deleleMeninggal(element: any): void {
+  public deleteMeninggal(element: any): void {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '25vw',
       data: {
@@ -167,5 +168,28 @@ export class PendudukMeninggalComponent implements OnInit {
         );
       }
     });
+  }
+
+  onSearch(): void {
+    this.loading = true;
+    const params = {
+      keyword: this.keyword,
+      page: this.page,
+      size: this.itemsPerPage,
+      sort: 'id,asc', // Specify the default sorting property and direction
+    };
+
+    this.pendudukMeninggalService
+      .searchPendudukMeninggal(
+        params.keyword,
+        params.page,
+        params.size,
+        params.sort
+      )
+      .subscribe((data) => {
+        this.dataSource = new MatTableDataSource<IPendudukMeninggal>(data);
+        this.dataSource.paginator = this.paginator;
+        this.loading = false;
+      });
   }
 }

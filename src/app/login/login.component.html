@@ -1,0 +1,29 @@
+<mat-card class="card">
+  <mat-card-header>
+    <mat-card-title>Login</mat-card-title>
+  </mat-card-header>
+  <mat-card class="example-card mt-2 mb-2">
+    <mat-card-content>
+      <div class="form-group">
+        <mat-form-field class="w-100" appearance="outline">
+          <mat-icon matPrefix>mode_edit</mat-icon>
+          <mat-label>Username</mat-label>
+          <input matInput type="text" [(ngModel)]="username" />
+        </mat-form-field>
+      </div>
+      <div class="form-group">
+        <mat-form-field class="w-100" appearance="outline">
+          <mat-icon matPrefix>mode_edit</mat-icon>
+          <mat-label>Password</mat-label>
+          <input matInput type="password" [(ngModel)]="password" />
+        </mat-form-field>
+      </div>
+      <mat-card-actions class="p-2">
+        <a routerLink="/register" class="button-register">REGISTER</a>
+        <div class="flex-grow"></div> <!-- Add a flexible space -->
+        <button mat-raised-button class="button-styling" (click)="login()">LOGIN</button>
+        <button mat-raised-button class="button-cancel">CANCEL</button>
+      </mat-card-actions>
+    </mat-card-content>
+  </mat-card>
+</mat-card>

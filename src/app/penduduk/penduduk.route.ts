@@ -15,6 +15,7 @@ import { EMPTY, Observable, map, mergeMap, of } from 'rxjs';
 import { HttpResponse } from '@angular/common/http';
 import { JhiResolvePagingParams } from '../shared/base/resolve-paging-params.service';
 import { PendudukUpdateComponent } from './penduduk-update/penduduk-update.component';
+import { AuthGuard } from '../login/auth.guard';
 
 @Injectable({ providedIn: 'root' })
 export class PendudukResolve implements Resolve<IPenduduk> {
@@ -51,40 +52,6 @@ export class PendudukResolve implements Resolve<IPenduduk> {
     return of(newItem);
   }
 }
-// resolve(
-//   route: ActivatedRouteSnapshot
-// ): Observable<IPenduduk> | Observable<never> {
-//   const useTemplate = 'default';
-//   const id = route.params['id'];
-//   if (id) {
-//     return this.service.find(id).pipe(
-//       mergeMap((penduduk: HttpResponse<Penduduk>) => {
-//         if (penduduk.body) {
-//           return of(penduduk.body);
-//         } else {
-//           this.router.navigate(['404']);
-//           return EMPTY;
-//         }
-//       })
-//     );
-//   }
-//   if (useTemplate) {
-//     return this.service.template(useTemplate).pipe(
-//       map((res: HttpResponse<IPenduduk>) => res.body),
-//       mergeMap((res) => {
-//         if (res) {
-//           return of(res);
-//         } else {
-//           this.router.navigate(['404']);
-//           return EMPTY;
-//         }
-//       })
-//     );
-//   }
-//   const newItem = new Penduduk();
-//   return of(newItem);
-// }
-// }
 
 export const pendudukRoute: Routes = [
   {

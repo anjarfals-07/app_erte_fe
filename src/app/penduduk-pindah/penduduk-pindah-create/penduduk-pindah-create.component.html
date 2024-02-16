@@ -11,9 +11,9 @@
       <section class="mt-2">
         <mat-form-field class="w-100" appearance="outline">
           <mat-label>Tanggal Pindah</mat-label>
-          <input matInput [matDatepicker]="pickerFromDate" [(ngModel)]="pendudukPindah.tanggalPindah" />
-          <mat-datepicker-toggle matSuffix [for]="pickerFromDate"></mat-datepicker-toggle>
-          <mat-datepicker #pickerFromDate></mat-datepicker>
+          <input matInput [matDatepicker]="tglPindah" [(ngModel)]="pendudukPindah.tanggalPindah" />
+          <mat-datepicker-toggle matSuffix [for]="tglPindah"></mat-datepicker-toggle>
+          <mat-datepicker #tglPindah></mat-datepicker>
         </mat-form-field>
       </section>
       <section class="mt-2">

@@ -21,6 +21,7 @@ import { PendudukMeninggalService } from '../penduduk-meninggal.service';
 import { IPendudukMeninggal } from '../penduduk-meninggal.model';
 import { IPenduduk, Penduduk } from 'src/app/penduduk/penduduk.model';
 import { PendudukService } from 'src/app/penduduk/penduduk.service';
+import { DatePipe } from '@angular/common';
 
 // Define the custom date format
 export const MY_FORMATS = {
@@ -58,6 +59,8 @@ export class PendudukMeninggalCreateComponent implements OnInit {
   getPenduduk: IPenduduk[];
   selectedPenduduk: IPenduduk;
   isNoKtpDisabled: boolean = true; // Default: disabled
+  mode: string;
+  public noKartuKeluarga: string;
 
   constructor(
     private dialog: MatDialog,
@@ -71,20 +74,28 @@ export class PendudukMeninggalCreateComponent implements OnInit {
     private pendudukService: PendudukService,
 
     private _dialog: MatDialogRef<PendudukMeninggalCreateComponent>,
-    protected pendudukMeninggalService: PendudukMeninggalService
+    protected pendudukMeninggalService: PendudukMeninggalService,
+    private datePipe: DatePipe
   ) {
     _dialog.disableClose = true;
     _dialog.backdropClick().subscribe((_) => {
       this.openCancelDialog();
     });
+    this.mode = this.data.mode;
     this.pendudukMeninggal = this.data.pendudukMeninggal;
-    console.log(this.pendudukMeninggal);
   }
 
   ngOnInit(): void {
     // Panggil fungsi generate saat buka dialog untuk mengisi nilai default
     if (!this.pendudukMeninggal.id) {
       this.generateAutoCodes(); // Call the function to generate auto codes
+    }
+    this.loadAllPenduduk();
+
+    if (this.mode === 'edit') {
+      this.noKartuKeluarga = this.pendudukMeninggal.penduduk.kartuKeluarga.noKK;
+      this.penduduk.kartuKeluarga.noKK = this.noKartuKeluarga;
+      this.searchNoKK(); // Trigger the search to fetch and display other related information
     }
   }
 
@@ -96,11 +107,20 @@ export class PendudukMeninggalCreateComponent implements OnInit {
     };
 
     this.pendudukService.getAll(params).subscribe((data) => {
-      const penduduks = data.filter(
-        (p: { newStatusPenduduk: string }) => p.newStatusPenduduk !== 'PINDAH'
-      );
-      // this.getPenduduk = data;
+      let penduduks;
+      if (this.mode === 'add') {
+        penduduks = data.filter(
+          (p: { newStatusPenduduk: string }) => p.newStatusPenduduk === null
+        );
+      } else {
+        penduduks = data.filter(
+          (p: { newStatusPenduduk: string }) =>
+            p.newStatusPenduduk === 'MENINGGAL' || p.newStatusPenduduk === null
+        );
+      }
+
       this.getPenduduk = penduduks;
+      // this.getPenduduk = penduduks;
 
       console.log('data penduduk', this.getPenduduk);
       // this.items.paginator = this.paginator;
@@ -109,13 +129,17 @@ export class PendudukMeninggalCreateComponent implements OnInit {
   }
 
   onNoKKChange() {
-    const noKK = this.penduduk.kartuKeluarga.noKK;
+    if (this.mode === 'add') {
+      this.noKartuKeluarga = this.penduduk.kartuKeluarga.noKK;
+    } else {
+      this.noKartuKeluarga = this.pendudukMeninggal.penduduk.kartuKeluarga.noKK;
+    }
     const isMatchingNoKK = this.getPenduduk.some(
-      (p) => p.kartuKeluarga.noKK === noKK
+      (p) => p.kartuKeluarga.noKK === this.noKartuKeluarga
     );
     console.log('is match', isMatchingNoKK);
 
-    if (!noKK) {
+    if (!this.noKartuKeluarga) {
       this.isNoKtpDisabled = true;
       this.selectedPenduduk = null;
       this.clearSearch();
@@ -136,7 +160,6 @@ export class PendudukMeninggalCreateComponent implements OnInit {
   }
 
   selectPenduduk(selectedPenduduk: IPenduduk) {
-    console.log('select', selectedPenduduk);
     if (selectedPenduduk) {
       this.selectedPenduduk = selectedPenduduk;
     } else {
@@ -145,34 +168,49 @@ export class PendudukMeninggalCreateComponent implements OnInit {
   }
 
   searchNoKK() {
-    const noKK = this.penduduk.kartuKeluarga.noKK;
-    if (!noKK) {
-      console.log('no kk', noKK);
+    if (!this.noKartuKeluarga) {
       this.messageService.add({
         severity: 'warn',
         summary: 'Warning',
         detail: `No KK Harus Diisi Terlebih Dahulu !`,
       });
-      this.isNoKtpDisabled = true; // Menonaktifkan field No KTP
-      this.selectedPenduduk = null; // Mengatur selectedPenduduk menjadi null
-      this.clearSearch(); // Bersihkan hasil pencarian sebelumnya
+      this.isNoKtpDisabled = true;
+      this.selectedPenduduk = null;
+      this.clearSearch();
       return;
     }
 
-    this.pendudukService.getPendudukByNoKK(noKK).subscribe(
+    this.pendudukService.getPendudukByNoKK(this.noKartuKeluarga).subscribe(
       (data) => {
-        if (Array.isArray(data) && data.length > 0) {
-          const datas = data.filter((e) => e.newStatusPenduduk === null);
-          this.getNoKtp = datas;
+        const datas = Array.isArray(data)
+          ? data.filter((e) =>
+              this.mode === 'edit'
+                ? e.newStatusPenduduk === 'MENINGGAL' ||
+                  e.newStatusPenduduk === null
+                : e.newStatusPenduduk === null
+            )
+          : [];
 
-          this.isNoKtpDisabled = false; // Mengaktifkan field No KTP
+        this.getNoKtp = datas;
+
+        if (this.mode === 'edit') {
+          const matchingPenduduk = datas.find(
+            (p) => p.noKtp === this.pendudukMeninggal.penduduk.noKtp
+          );
+
+          this.isNoKtpDisabled = matchingPenduduk ? false : true;
+          this.selectedPenduduk = matchingPenduduk || null;
         } else {
+          this.isNoKtpDisabled = false;
+          this.selectedPenduduk = null;
+        }
+
+        if (datas.length === 0) {
           this.messageService.add({
             severity: 'error',
             summary: 'Error',
-            detail: `No KK dengan nomor ${noKK} tidak terdaftar atau tidak ada.`,
+            detail: `No KK dengan nomor ${this.noKartuKeluarga} tidak terdaftar atau tidak ada.`,
           });
-          this.isNoKtpDisabled = true; // Menonaktifkan field No KTP
           this.clearSearch();
         }
       },
@@ -183,11 +221,56 @@ export class PendudukMeninggalCreateComponent implements OnInit {
           summary: 'Error',
           detail: 'Terjadi kesalahan saat mengambil data. Silakan coba lagi.',
         });
-        this.isNoKtpDisabled = true; // Menonaktifkan field No KTP
+        this.isNoKtpDisabled = true;
         this.clearSearch();
       }
     );
   }
+
+  // searchNoKK() {
+  //   const noKK = this.penduduk.kartuKeluarga.noKK;
+  //   if (!noKK) {
+  //     console.log('no kk', noKK);
+  //     this.messageService.add({
+  //       severity: 'warn',
+  //       summary: 'Warning',
+  //       detail: `No KK Harus Diisi Terlebih Dahulu !`,
+  //     });
+  //     this.isNoKtpDisabled = true; // Menonaktifkan field No KTP
+  //     this.selectedPenduduk = null; // Mengatur selectedPenduduk menjadi null
+  //     this.clearSearch(); // Bersihkan hasil pencarian sebelumnya
+  //     return;
+  //   }
+
+  //   this.pendudukService.getPendudukByNoKK(noKK).subscribe(
+  //     (data) => {
+  //       if (Array.isArray(data) && data.length > 0) {
+  //         const datas = data.filter((e) => e.newStatusPenduduk === null);
+  //         this.getNoKtp = datas;
+
+  //         this.isNoKtpDisabled = false; // Mengaktifkan field No KTP
+  //       } else {
+  //         this.messageService.add({
+  //           severity: 'error',
+  //           summary: 'Error',
+  //           detail: `No KK dengan nomor ${noKK} tidak terdaftar atau tidak ada.`,
+  //         });
+  //         this.isNoKtpDisabled = true; // Menonaktifkan field No KTP
+  //         this.clearSearch();
+  //       }
+  //     },
+  //     (error) => {
+  //       console.error('Error fetching data:', error);
+  //       this.messageService.add({
+  //         severity: 'error',
+  //         summary: 'Error',
+  //         detail: 'Terjadi kesalahan saat mengambil data. Silakan coba lagi.',
+  //       });
+  //       this.isNoKtpDisabled = true; // Menonaktifkan field No KTP
+  //       this.clearSearch();
+  //     }
+  //   );
+  // }
 
   public openCancelDialog(): void {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
@@ -204,8 +287,10 @@ export class PendudukMeninggalCreateComponent implements OnInit {
       }
     });
   }
-
   public save() {
+    this.validate().then(() => this.preSave());
+  }
+  public preSave() {
     const request = {
       // Build your request object based on your form data
       // For example:
@@ -215,13 +300,14 @@ export class PendudukMeninggalCreateComponent implements OnInit {
       suratKeteranganMeninggalRequest: {
         noSuratMeninggal:
           this.pendudukMeninggal.suratKeteranganMeninggal.noSuratMeninggal,
-        tanggalSuratMeninggal:
-          this.pendudukMeninggal.suratKeteranganMeninggal.tanggalSuratMeninggal,
+        tanggalSuratMeninggal: this.formatDate(
+          this.pendudukMeninggal.suratKeteranganMeninggal.tanggalSuratMeninggal
+        ),
         keteranganSuratMeninggal:
           this.pendudukMeninggal.suratKeteranganMeninggal
             .keteranganSuratMeninggal,
       },
-      tanggalWafat: this.pendudukMeninggal.tanggalWafat,
+      tanggalWafat: this.formatDate(this.pendudukMeninggal.tanggalWafat),
     };
 
     if (this.pendudukMeninggal.id) {
@@ -280,38 +366,56 @@ export class PendudukMeninggalCreateComponent implements OnInit {
       alamat: true,
       noSurat: true,
       tanggalSurat: true,
+      noKK: true,
     };
+    if (this.mode === 'edit' || this.mode === 'view') {
+      if (!this.pendudukMeninggal.kodeMeninggal) {
+        this._showNotification('error', 'Masukkan Kode Pindah terlebih dahulu');
+        mustValidate.kodePindah = false;
+      }
 
-    if (!this.pendudukMeninggal.kodeMeninggal) {
-      this._showNotification('error', 'Masukkan Kode Pindah terlebih dahulu');
-      mustValidate.kodePindah = false;
+      if (!this.pendudukMeninggal.tanggalWafat) {
+        // Handle the case when selectedPenduduk is undefined
+        this._showNotification('error', 'Pilih Tanggal Pindah terlebih dahulu');
+        mustValidate.tanggalPindah = false;
+      }
+      if (!this.pendudukMeninggal.penyebab) {
+        // Handle the case when selectedPenduduk is undefined
+        this._showNotification('error', 'Pilih Alamat Pindah terlebih dahulu');
+        mustValidate.alamat = false;
+      }
+      if (!this.pendudukMeninggal.suratKeteranganMeninggal.noSuratMeninggal) {
+        // Handle the case when selectedPenduduk is undefined
+        this._showNotification(
+          'error',
+          'Pilih No Surat Pindah terlebih dahulu'
+        );
+        mustValidate.noSurat = false;
+      }
+      if (
+        !this.pendudukMeninggal.suratKeteranganMeninggal.tanggalSuratMeninggal
+      ) {
+        // Handle the case when selectedPenduduk is undefined
+        this._showNotification(
+          'error',
+          'Pilih Tanggal Surat Pindah terlebih dahulu'
+        );
+        mustValidate.tanggalSurat = false;
+      }
+      if (!this.penduduk.kartuKeluarga.noKK) {
+        this._showNotification('error', 'Masukkan No KK terlebih dahulu');
+        mustValidate.noKK = false;
+      }
+      if (!this.selectedPenduduk) {
+        // Handle the case when selectedPenduduk is undefined
+        this._showNotification(
+          'error',
+          'Pilih No Ktp penduduk  terlebih dahulu'
+        );
+        return false;
+      }
     }
 
-    if (!this.pendudukMeninggal.tanggalWafat) {
-      // Handle the case when selectedPenduduk is undefined
-      this._showNotification('error', 'Pilih Tanggal Pindah terlebih dahulu');
-      mustValidate.tanggalPindah = false;
-    }
-    if (!this.pendudukMeninggal.penyebab) {
-      // Handle the case when selectedPenduduk is undefined
-      this._showNotification('error', 'Pilih Alamat Pindah terlebih dahulu');
-      mustValidate.alamat = false;
-    }
-    if (!this.pendudukMeninggal.suratKeteranganMeninggal.noSuratMeninggal) {
-      // Handle the case when selectedPenduduk is undefined
-      this._showNotification('error', 'Pilih No Surat Pindah terlebih dahulu');
-      mustValidate.noSurat = false;
-    }
-    if (
-      !this.pendudukMeninggal.suratKeteranganMeninggal.tanggalSuratMeninggal
-    ) {
-      // Handle the case when selectedPenduduk is undefined
-      this._showNotification(
-        'error',
-        'Pilih Tanggal Surat Pindah terlebih dahulu'
-      );
-      mustValidate.tanggalSurat = false;
-    }
     return this._validateProcess(mustValidate);
   }
 
@@ -349,9 +453,11 @@ export class PendudukMeninggalCreateComponent implements OnInit {
     return Math.floor(Math.random() * (max - min + 1) + min);
   }
 
-  // Function to generate auto number (6 digits)
-  // private generateAutoNumber(): string {
-  //   const randomNumber = Math.floor(100000 + Math.random() * 900000); // Generate a random 6-digit number
-  //   return randomNumber.toString();
-  // }
+  formatDate(date: Date | string): string {
+    // Ensure the input is a Date object before formatting
+    if (typeof date === 'string') {
+      date = new Date(date);
+    }
+    return this.datePipe.transform(date, 'yyyy-MM-dd');
+  }
 }

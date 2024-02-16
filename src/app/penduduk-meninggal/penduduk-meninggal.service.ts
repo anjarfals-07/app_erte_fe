@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { IPendudukMeninggal } from './penduduk-meninggal.model';
-import { AbstractEntityService } from '../shared/base/abstract-entity.service';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
+import { AbstractEntityService } from 'src/app/shared/base/abstract-entity.service';
 
 @Injectable({
   providedIn: 'root',
@@ -28,8 +28,18 @@ export class PendudukMeninggalService extends AbstractEntityService<IPendudukMen
 
     return this.http.get<any>(this.apiUrl, { params: httpParams });
   }
-  public deletePendudukMeninggal(id: number): Observable<any> {
-    const url = `${this.apiUrl}/${id}`;
-    return this.http.delete(`${url}`, { responseType: 'text' });
+  public searchPendudukMeninggal(
+    keyword: string,
+    page: number,
+    size: number,
+    sort: string
+  ): Observable<any> {
+    const params = new HttpParams()
+      .set('keyword', keyword)
+      .set('page', page.toString())
+      .set('size', size.toString())
+      .set('sort', sort);
+
+    return this.http.get<any>(`${this.apiUrl}/search`, { params });
   }
 }

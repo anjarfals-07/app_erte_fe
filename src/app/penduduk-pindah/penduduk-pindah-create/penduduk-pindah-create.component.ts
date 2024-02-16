@@ -19,6 +19,7 @@ import {
   MomentDateAdapter,
 } from '@angular/material-moment-adapter';
 import * as moment from 'moment';
+import { DatePipe } from '@angular/common';
 
 // Define the custom date format
 export const MY_FORMATS = {
@@ -63,7 +64,8 @@ export class PendudukPindahCreateComponent implements OnInit {
     protected messageService: MessageService,
 
     private _dialog: MatDialogRef<PendudukPindahCreateComponent>,
-    protected pendudukPindahService: PendudukPindahService
+    protected pendudukPindahService: PendudukPindahService,
+    private datePipe: DatePipe
   ) {
     _dialog.disableClose = true;
     _dialog.backdropClick().subscribe((_) => {
@@ -97,6 +99,14 @@ export class PendudukPindahCreateComponent implements OnInit {
   }
 
   public save() {
+    this.pendudukPindah.tanggalPindah = this.formatDate(
+      this.pendudukPindah.tanggalPindah
+    );
+    this.pendudukPindah.suratKeteranganPindah.tanggalSuratPindah =
+      this.formatDate(
+        this.pendudukPindah.suratKeteranganPindah.tanggalSuratPindah
+      );
+
     if (this.pendudukPindah.id) {
       this.pendudukPindahService
         .update(this.pendudukPindah, this.pendudukPindah.id)
@@ -221,9 +231,11 @@ export class PendudukPindahCreateComponent implements OnInit {
     return Math.floor(Math.random() * (max - min + 1) + min);
   }
 
-  // Function to generate auto number (6 digits)
-  // private generateAutoNumber(): string {
-  //   const randomNumber = Math.floor(100000 + Math.random() * 900000); // Generate a random 6-digit number
-  //   return randomNumber.toString();
-  // }
+  formatDate(date: Date | string): string {
+    // Ensure the input is a Date object before formatting
+    if (typeof date === 'string') {
+      date = new Date(date);
+    }
+    return this.datePipe.transform(date, 'yyyy-MM-dd');
+  }
 }

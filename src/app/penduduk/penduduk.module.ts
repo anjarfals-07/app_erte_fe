@@ -11,8 +11,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { PendudukUpdateComponent } from './penduduk-update/penduduk-update.component';
+
 import { HttpClientModule } from '@angular/common/http';
+import { PendudukUpdateComponent } from './penduduk-update/penduduk-update.component';
 @NgModule({
   declarations: [
     // PendudukComponent,

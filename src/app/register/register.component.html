@@ -1,0 +1,84 @@
+    <div class="row">
+      <div class="e-card">
+        <div class="e-card-header">
+          <div class="e-card-header-caption">
+            <div class="header-container">
+              <div class="header-content">
+                <img class="back-image" src="../../../content/images/back-icon.svg" (click)="openCancelDialog()" />
+                <span class="back-prefix" (click)="openCancelDialog()">Back | </span>
+              </div>
+              <p class="e-card-sub-title">Add New Register</p>
+            </div>
+          </div>
+        </div>
+        <div style="margin: 1rem">
+          <mat-card>
+            <mat-card-header>
+              <mat-card-subtitle class="fw-bold">Register User</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+              <div class="form-group">
+                <mat-form-field appearance="outline" class="w-100">
+                  <mat-label>Nomer KTP</mat-label>
+                  <input matInput placeholder="Enter keyword" [(ngModel)]="penduduk.noKtp"
+                    (ngModelChange)="onKtpChange()">
+                  <button mat-button matSuffix mat-icon-button aria-label="Search" (click)="searchKtp()">
+                    <mat-icon>search</mat-icon>
+                  </button>
+                  <button mat-button matSuffix mat-icon-button aria-label="Clear" (click)="this.clearSearch();">
+                    <mat-icon>close</mat-icon>
+                  </button>
+                </mat-form-field>
+              </div>
+
+              <section *ngIf="isFieldsVisible">
+                {{ user.penduduk.id }}
+                <div class="form-group">
+                  <mat-form-field class="w-100" appearance="outline">
+                    <mat-label>Nama Lengkap</mat-label>
+                    <input matInput type="text" name="namaLengkap" [(ngModel)]="user.penduduk.namaLengkap" />
+                  </mat-form-field>
+                </div>
+                <div class="form-group">
+                  <mat-form-field class="w-100" appearance="outline">
+                    <mat-label>Jenis Kelamin</mat-label>
+                    <input matInput type="text" name="jenisKelamin" [(ngModel)]="user.penduduk.jenisKelamin" />
+                  </mat-form-field>
+                </div>
+                <div class="form-group">
+                  <mat-form-field class="w-100" appearance="outline">
+                    <mat-label>E-Mail</mat-label>
+                    <input matInput type="text" name="email" [(ngModel)]="user.penduduk.email" />
+                  </mat-form-field>
+                </div>
+                <div class="form-group">
+                  <mat-form-field class="w-100" appearance="outline">
+                    <mat-label>Telepon</mat-label>
+                    <input matInput type="text" name="telepon" [(ngModel)]="user.penduduk.telepon" />
+                  </mat-form-field>
+                </div>
+                <div class="form-group">
+                  <mat-form-field class="w-100" appearance="outline">
+                    <mat-label>Username</mat-label>
+                    <input matInput type="text" name="username" [(ngModel)]="user.username" required />
+                  </mat-form-field>
+                </div>
+                <div class="form-group">
+                  <mat-form-field class="w-100" appearance="outline">
+                    <mat-label>Password</mat-label>
+                    <input matInput type="password" name="password" [(ngModel)]="user.password" required />
+                  </mat-form-field>
+                </div>
+              </section>
+              <!-- Display or hide fields based on visibility flags -->
+              <mat-card-actions>
+                <div class="button-container">
+                  <button class="submit-button button-styling" type="submit" mat-raised-button
+                    (click)="save()">Save</button>
+                </div>
+              </mat-card-actions>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+    </div>

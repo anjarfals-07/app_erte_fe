@@ -2,23 +2,23 @@
   <button (click)="drawer.toggle()" mat-icon-button>
     <mat-icon>menu</mat-icon>
   </button>
-  <span>Material Design</span>
+  <span>SIAP</span>
   <span class="example-spacer"></span>
   <button routerLink="" mat-button>Home</button>
   <button routerLink="" mat-button>About</button>
   <button routerLink="" mat-button>Contact</button>
-  <button [mat-menu-trigger-for]="lvl1master" mat-button>Master</button>
+  <button [mat-menu-trigger-for]="lvl1master" mat-button>
+    <mat-icon>account_circle</mat-icon> Account
+  </button>
   <mat-menu #lvl1master="matMenu">
-    <button mat-menu-item>Test 1</button>
-    <button mat-menu-item>Test 2</button>
-    <button mat-menu-item>Test 3</button>
+    <app-account></app-account>
   </mat-menu>
 </mat-toolbar>
 <mat-drawer-container autosize>
   <mat-drawer #drawer opened="true" mode="side" position="start">
     <mat-nav-list>
-      <mat-list-item routerLink="" class="nav-item">
-        <button routerLink="" mat-flat-button class="btn-nav">
+      <mat-list-item routerLink="/dashboard" class="nav-item">
+        <button routerLink="/dashboard" mat-flat-button class="btn-nav">
           <mat-icon>dashboard</mat-icon> Dashboard
         </button>
       </mat-list-item>
@@ -37,14 +37,14 @@
           <mat-icon>local_hospital</mat-icon> Penduduk Meninggal
         </button>
       </mat-list-item>
-      <mat-list-item class="nav-item">
-        <button mat-button class="btn-nav">
+      <mat-list-item routerLink="/surat-pengantar" class="nav-item">
+        <button routerLink="/surat-pengantar" mat-button class="btn-nav">
           <mat-icon>email</mat-icon> Surat Pengantar
         </button>
       </mat-list-item>
-      <mat-list-item class="nav-item">
-        <button mat-button class="btn-nav">
-          <mat-icon>settings</mat-icon> Settings
+      <mat-list-item routerLink="/kartu-keluarga" class="nav-item">
+        <button routerLink="/kartu-keluarga" mat-button class="btn-nav">
+          <mat-icon>email</mat-icon> Kartu Keluarga
         </button>
       </mat-list-item>
     </mat-nav-list>

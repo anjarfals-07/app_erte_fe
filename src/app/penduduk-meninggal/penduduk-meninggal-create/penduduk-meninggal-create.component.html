@@ -1,5 +1,5 @@
-<h2 mat-dialog-title>ADD / Edit Penduduk Meninggal</h2>
-<mat-dialog-content>
+<h2 mat-dialog-title>{{ mode === 'edit' ? 'Edit' : 'Add' }} Penduduk Meninggal</h2>
+<mat-dialog-content *ngIf="mode === 'add'">
   <mat-card>
     <mat-card-content>
       <div class="row">
@@ -144,6 +144,154 @@
 
 
 </mat-dialog-content>
+
+
+<mat-dialog-content *ngIf="mode === 'edit'">
+  <mat-card>
+    <mat-card-content>
+      <div class="row">
+        <div class="col-6">
+          <section class="mt-2">
+            <div class="form-group">
+              <mat-form-field class="w-100" appearance="outline">
+                <mat-label>Kode Meninggal</mat-label>
+                <input matInput type="text" required [(ngModel)]="pendudukMeninggal.kodeMeninggal" disabled />
+              </mat-form-field>
+            </div>
+          </section>
+          <section class="mt-2">
+            <div class="form-group">
+              <mat-form-field class="w-100" appearance="outline">
+                <mat-label>Tanggal Wafat</mat-label>
+                <input matInput [matDatepicker]="pickerFromDate" [(ngModel)]="pendudukMeninggal.tanggalWafat" />
+                <mat-datepicker-toggle matSuffix [for]="pickerFromDate"></mat-datepicker-toggle>
+                <mat-datepicker #pickerFromDate></mat-datepicker>
+              </mat-form-field>
+            </div>
+          </section>
+          <section class="mt-2">
+            <div class="form-group">
+              <mat-form-field class="w-100" appearance="outline">
+                <mat-label>Keterangan Meninggal</mat-label>
+                <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize"
+                  [(ngModel)]="pendudukMeninggal.penyebab"></textarea>
+              </mat-form-field>
+            </div>
+          </section>
+        </div>
+        <div class="col-6">
+          <section class="mt-2">
+            <div class="form-group">
+              <mat-form-field class="w-100" appearance="outline">
+                <mat-label>No Surat Keterangan Meninggal</mat-label>
+                <input matInput type="text" required
+                  [(ngModel)]="pendudukMeninggal.suratKeteranganMeninggal.noSuratMeninggal" disabled />
+              </mat-form-field>
+            </div>
+          </section>
+          <section class="mt-2">
+            <div class="form-group">
+              <mat-form-field class="w-100" appearance="outline">
+                <mat-label>Tanggal Surat Keterangan Meninggal</mat-label>
+                <input matInput [matDatepicker]="pickerSuratDate"
+                  [(ngModel)]="pendudukMeninggal.suratKeteranganMeninggal.tanggalSuratMeninggal" />
+                <mat-datepicker-toggle matSuffix [for]="pickerSuratDate"></mat-datepicker-toggle>
+                <mat-datepicker #pickerSuratDate></mat-datepicker>
+              </mat-form-field>
+            </div>
+          </section>
+          <section class="mt-2">
+            <div class="form-group">
+              <mat-form-field class="w-100" appearance="outline">
+                <mat-label>Keterangan Surat Meninggal</mat-label>
+                <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize"
+                  [(ngModel)]="pendudukMeninggal.suratKeteranganMeninggal.keteranganSuratMeninggal"></textarea>
+              </mat-form-field>
+            </div>
+          </section>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+  <mat-card class="mt-3">
+    <mat-card-content>
+      <div class="row">
+        <div class="col-12">
+          <div class="form-group">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Nomer KK</mat-label>
+              <input matInput placeholder="Enter keyword" [(ngModel)]="penduduk.kartuKeluarga.noKK"
+                (ngModelChange)="onNoKKChange()" disabled>
+              <button mat-button matSuffix mat-icon-button aria-label="Search" (click)="searchNoKK()" disabled>
+                <mat-icon>search</mat-icon>
+              </button>
+              <button mat-button matSuffix mat-icon-button aria-label="Clear" (click)="this.clearSearch();" disabled>
+                <mat-icon>close</mat-icon>
+              </button>
+            </mat-form-field>
+          </div>
+          <div class="form-group">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Select No KTP</mat-label>
+              <mat-select [(ngModel)]="selectedPenduduk" (ngModelChange)="selectPenduduk(selectedPenduduk)"
+                [disabled]="isNoKtpDisabled">
+                <mat-option value="">- Please Select -</mat-option>
+                <mat-option *ngFor="let penduduk of getNoKtp" [value]="penduduk">{{ penduduk.noKtp }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <!-- Display Selected Penduduk Information -->
+          <div *ngIf="selectedPenduduk">
+            <div class="form-group">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Id</mat-label>
+                <input matInput [(ngModel)]="selectedPenduduk.id" readonly>
+              </mat-form-field>
+            </div>
+            <div class="form-group">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Nama Lengkap</mat-label>
+                <input matInput [(ngModel)]="selectedPenduduk.namaLengkap" readonly>
+              </mat-form-field>
+              <div class="form-group">
+              </div>
+
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Jenis Kelamin</mat-label>
+                <input matInput [(ngModel)]="selectedPenduduk.jenisKelamin" readonly>
+              </mat-form-field>
+            </div>
+            <div class="form-group">
+              <mat-form-field class="w-100" appearance="outline">
+                <mat-label>Tempat Lahir</mat-label>
+                <input matInput type="text" [(ngModel)]="selectedPenduduk.tempatLahir" />
+              </mat-form-field>
+            </div>
+            <div class="form-group">
+              <mat-form-field class="w-100" appearance="outline">
+                <mat-label>From Date</mat-label>
+                <input matInput [matDatepicker]="pickerFromDate" [(ngModel)]="selectedPenduduk.tanggallahir" />
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matSuffix [for]="pickerFromDate"></mat-datepicker-toggle>
+                <mat-datepicker #pickerFromDate></mat-datepicker>
+              </mat-form-field>
+            </div>
+            <div class="form-group">
+              <mat-form-field class="w-100" appearance="outline">
+                <mat-label>Agama</mat-label>
+                <input matInput type="text" [(ngModel)]="selectedPenduduk.agama" />
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+
+</mat-dialog-content>
+
 <mat-dialog-actions align="center">
   <button mat-raised-button class="confirm-button-no" (click)="openCancelDialog()">CLOSE</button>
   <button mat-raised-button class="confirm-button-yes" (click)="save()">SAVE</button>

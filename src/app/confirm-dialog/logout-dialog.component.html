@@ -1,0 +1,12 @@
+ <h1 mat-dialog-title>Logout Confirmation</h1>
+ <mat-dialog-content>
+   <fa-icon icon="exclamation-triangle" class="fa-icon"></fa-icon>
+   <div class="text-center py-5">
+     <label> Are you sure you want to logout?</label>
+   </div>
+ </mat-dialog-content>
+ <!-- <a style="justify-content:flex-start;">Yes</a> <a style="justify-content:flex-end;">No</a> -->
+ <mat-dialog-actions align="center">
+   <button mat-button class="confirm-button-no" (click)="onNoClick()">No</button>
+   <button mat-button class="confirm-button-yes" [mat-dialog-close]="true" cdkFocusInitial>Yes</button>
+ </mat-dialog-actions>

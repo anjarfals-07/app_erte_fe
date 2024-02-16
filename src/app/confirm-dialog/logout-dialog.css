@@ -1,0 +1,53 @@
+/* logout-confirmation-dialog.component.css */
+
+.mat-dialog-container {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+h1.mat-dialog-title {
+  font-size: 1.3rem; /* Sesuaikan dengan ukuran yang diinginkan */
+  margin-bottom: 10px;
+  text-align: center; /* Memastikan judul berada di tengah */
+}
+
+.mat-dialog-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.fa-icon {
+  font-size: 2rem;
+  color: #ff9800; /* Contoh warna, sesuaikan dengan kebutuhan */
+}
+
+.text-center {
+  text-align: center;
+}
+
+.py-5 {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+label {
+  font-size: 1.2rem;
+}
+
+.mat-dialog-actions {
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.confirm-button-no {
+  background-color: #2196f3; /* Contoh warna untuk tombol No */
+  color: white;
+}
+
+.confirm-button-yes {
+  background-color: #f44336; /* Contoh warna untuk tombol Yes */
+  color: white;
+}

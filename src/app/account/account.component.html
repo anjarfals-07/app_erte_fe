@@ -1,0 +1,23 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title class="account-title">Account</mat-card-title>
+  </mat-card-header>
+  <div class="circle-image-container mt-3">
+    <img mat-card-image class="circle-image" src="{{ account?.fotoUrl }}">
+  </div>
+  <mat-card-content>
+    <p class="user-info">
+      <strong>{{ account?.namaLengkap }}</strong>
+    </p>
+    <p class="user-info">
+      <strong>{{ account?.email }}</strong>
+    </p>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button class="button-styling" (click)="logout()" [disabled]="isLoading">
+      <mat-spinner *ngIf="isLoading" diameter="20"></mat-spinner>
+      <span *ngIf="!isLoading">Sign Out</span>
+    </button>
+    <button mat-button class="change-password-button">Change Password</button>
+  </mat-card-actions>
+</mat-card>

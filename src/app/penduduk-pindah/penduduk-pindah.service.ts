@@ -7,15 +7,11 @@ import {
   HttpResponseBase,
 } from '@angular/common/http';
 import { Observable, map, tap } from 'rxjs';
-import { environment } from '../../environments/environment';
-import { AbstractEntityService } from '../shared/base/abstract-entity.service';
-import { createRequestOption } from '../shared/util/request-util';
-import {
-  IKartuKeluarga,
-  KartuKeluarga,
-} from '../kartu-keluarga/kartukeluarga.model';
+
 import { IPendudukPindah } from './penduduk-pindah.model';
 import { IDetailPendudukPindah } from './detail-penduduk-pindah/detail-penduduk-pindah.model';
+import { environment } from 'src/environments/environment';
+import { AbstractEntityService } from 'src/app/shared/base/abstract-entity.service';
 
 @Injectable({
   providedIn: 'root',
@@ -60,12 +56,6 @@ export class PendudukPindahService extends AbstractEntityService<IPendudukPindah
   getById(id: number): Observable<IPendudukPindah> {
     return this.http.get<IPendudukPindah>(`${this.resourceUrl}/${id}`);
   }
-  // getPendudukByNoKK(noKK: string): Observable<IDetailPendudukPindah[]> {
-  //   const url = `${this.apiUrl}/get-penduduk-by-no-kk`;
-  //   const params = { noKK }; // Pass the parameter as an object
-
-  //   return this.http.get<IDetailPendudukPindah[]>(url, { params });
-  // }
 
   public getAllDetail(params: any): Observable<any> {
     const url = `${this.resourceUrlNew}`;
@@ -81,10 +71,5 @@ export class PendudukPindahService extends AbstractEntityService<IPendudukPindah
     const url = `${this.resourceUrlNew}`;
     const params = { kodePindah }; // Pass the parameter as an object
     return this.http.get<any>(url, { params });
-  }
-
-  public deletePendudukPindah(id: number): Observable<any> {
-    const url = `${this.apiUrl}/${id}`;
-    return this.http.delete(`${url}`, { responseType: 'text' });
   }
 }

@@ -1,0 +1,65 @@
+.card {
+  max-width: 450px;
+  margin: 0 auto;
+  margin-top: 50px;
+  padding: 0px;
+}
+
+.example-card {
+  max-width: 430px;
+  margin: 0 auto;
+  padding: 10px;
+}
+
+.mat-card-header {
+  justify-content: center;
+  margin: 0 auto;
+  padding: 0 auto;
+  background-color: #236edf;
+  color: #fff;
+}
+
+.mat-card-title {
+  font-family: "Poppins", sans-serif;
+  font-size: 28px;
+  color: #fff;
+  font-style: normal;
+  font-weight: 600;
+  justify-content: center;
+}
+
+.mat-card-header .mat-card-title {
+  margin-bottom: 15px;
+  margin-top: 15px;
+}
+
+.button-styling {
+  background-color: #236edf;
+  color: #ffffff;
+}
+
+.button-cancel {
+  background-color: #df2323;
+  color: #ffffff;
+}
+
+.mat-card-actions {
+  display: flex; /* Use flexbox */
+  align-items: center; /* Center vertically */
+  justify-content: space-between; /* Space between items */
+  margin-left: -8px;
+  margin-right: -8px;
+  padding: 8px 0;
+  text-align: right;
+}
+
+.button-register {
+  background-color: #23df76; /* Adjust the color as needed */
+  color: #ffffff;
+  margin-top: 15px;
+  margin-left: 15px; /* Add this line to move the button to the left */
+}
+
+.flex-grow {
+  flex-grow: 1; /* Use flex-grow to create a flexible space */
+}

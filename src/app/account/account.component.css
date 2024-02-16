@@ -1,0 +1,47 @@
+mat-card-title {
+  font-family: "Poppins", sans-serif;
+  font-size: 24px; /* Memperbesar ukuran judul */
+  color: #008881;
+  font-weight: 700; /* Menyesuaikan kekuatan teks judul */
+}
+
+.account-title {
+  justify-content: center;
+}
+
+.circle-image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px; /* Memberikan sedikit ruang atas dari judul ke gambar */
+}
+
+.circle-image {
+  border-radius: 50%;
+  width: 120px; /* Memperbesar ukuran gambar */
+  height: 120px; /* Memperbesar ukuran gambar */
+  object-fit: cover;
+  border: 4px solid #2b8ced; /* Menambahkan border pada gambar */
+}
+
+.user-info {
+  font-size: 16px; /* Ukuran teks informasi pengguna */
+  color: #555; /* Warna teks abu-abu untuk informasi pengguna */
+  margin-bottom: 8px; /* Memberikan sedikit ruang antara info pengguna */
+  text-align: center;
+}
+
+.button-styling {
+  background-color: #008881; /* Warna tombol Sign Out */
+  color: #fff; /* Warna teks tombol Sign Out */
+}
+
+.change-password-button {
+  color: #008881; /* Warna teks tombol Change Password */
+}
+.mat-spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
